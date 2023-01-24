@@ -2,6 +2,10 @@
 import pandas as pd
 import glob
 import re
+import logging
+
+# gerando log
+logging.basicConfig(level=logging.INFO, filename="mergedata.log", encoding='utf-8', format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Diretórios
 diretorio_estabelecimentos = 'base_csv_estabelecimentos'
@@ -46,10 +50,10 @@ for file in all_files_estabelecimentos:
     merged_data.rename(columns={'UF':'ESTADO'}, inplace=True)
     merged_data[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA','RUA','COMPLEMENTO', 'BAIRRO','CIDADE','ESTADO','CEP']]
     chunk_size = 500000
-    name_file = re.sub([diretorio_estabelecimentos,'.csv'],'', file)
+    name_file = re.sub(f"[{diretorio_estabelecimentos},'.csv']",'', file)
 
     print(f"Concluído processo de extração dos dados do CNAE de {name_file}")
-    
+
     for i in range(0, len(merged_data), chunk_size):
         df_chunk = merged_data.iloc[i:i+chunk_size]
         df_chunk.to_csv(f'merge_base/CNPJ_{i}_{name_file}.csv', mode='w', index=False)
