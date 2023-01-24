@@ -50,7 +50,9 @@ for file in all_files_estabelecimentos:
     merged_data.rename(columns={'UF':'ESTADO'}, inplace=True)
     merged_data[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA','RUA','COMPLEMENTO', 'BAIRRO','CIDADE','ESTADO','CEP']]
     chunk_size = 500000
-    name_file = re.sub(f"[{diretorio_estabelecimentos},'.csv']",'', file)
+    name_file = re.sub('.csv','', file)
+    name_file = re.sub(r'base_csv_estabelecimentos','', file)
+    name_file = re.sub('["("")"?@|$|.|/|\|!,:%;"]','', file)
 
     print(f"Concluído processo de extração dos dados do CNAE de {name_file}")
 
