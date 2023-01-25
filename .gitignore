@@ -1,2 +1,3 @@
-# ignore todos os csvs
+# ignore todos os csvs e json
 *.csv
+*.json

@@ -52,7 +52,7 @@ for file_estabelecimento in all_files_estabelecimentos:
 
         # Tratando os dados para disposição
         merged_data = pd.merge(merged_data, municipios, on='MUNICIPIO')
-        merged_data['RUA'] = merged_data['TIPO_LOGRADOURO'] + merged_data['LOGRADOURO']
+        merged_data['RUA'] = merged_data['TIPO_LOGRADOURO'] +' '+ merged_data['LOGRADOURO']
         merged_data.rename(columns={'UF':'ESTADO'}, inplace=True)
         merged_data = merged_data[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA','RUA','COMPLEMENTO', 'BAIRRO','CIDADE','ESTADO','CEP']]
         
