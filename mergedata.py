@@ -52,7 +52,7 @@ for file_estabelecimento in all_files_estabelecimentos:
         d_empresa = pd.read_csv(f'{diretorio_empresa}{file_empresa}',dtype=dtypes_EMPRESA,error_bad_lines=False, sep=';')
         #print(d_empresa.columns)
         d_empresa['CNPJ_BASE'] = pd.to_numeric(d_empresa['CNPJ_BASE'], downcast='integer')
-        merged_data = pd.merge(d_estabelecimento, d_empresa, on='CNPJ_BASE', how='inner')
+        merged_data = pd.merge(d_estabelecimento, d_empresa, on='CNPJ_BASE')
     
 
         # Tratando os dados para disposição
