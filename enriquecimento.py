@@ -4,28 +4,6 @@ import json
 import re
 import os
 import translators.server as tss
-import concurrent.futures
-from geopy.geocoders import Nominatim
-
-geolocator = Nominatim(user_agent="geoapiExercises")
-
-
-def get_lat_long(cep:str):
-    location = geolocator.geocode(cep)
-    return location.latitude, location.longitude
-
-def thread_get_lat_long(cep_list):
-    """Implanta o multithreading na função `get_lat_long`"""
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        results = [executor.submit(get_lat_long, cep) for cep in cep_list]
-
-    lat_longs = []
-    for f in concurrent.futures.as_completed(results):
-        result = f.result()
-        if result:
-            lat_longs.append(result)
-
-    return lat_longs
 
 
 def traduzir(texto):
@@ -50,14 +28,13 @@ comparador = pd.DataFrame(dict_comparador)
 # Diretórios
 diretorio = r'merge_base/'
 all_files = list(filter(lambda x: '.csv' in x, os.listdir(diretorio)))
-
+COORDENADAS = pd.read_csv(r".\CEP\LISTA_CEP_LATITUDE_LONGITUDE.csv", sep=';')
 for file in all_files:
     # Itera sobre todos os arquivos CSV no repositório
-
     dados = pd.read_csv(f"{diretorio}{file}", sep=';')
-    lista_cep = dados['CEP'].tolist()
-    lat_longs = thread_get_lat_long(lista_cep)
-    dados['LATITUDE'], dados['LONGITUDE'] = zip(*lat_longs)
+    print(dados.shape[0])
+    dadosc = pd.merge(dados,COORDENADAS,how='left', on='CEP')
+    print(dados.shape[0])
     dados['SITE'] = "www" + dados['NOME_FANTASIA'].str.lower().replace(" ", "", regex=True) + ".com"
     dados['FACEBOOK'] = "https://pt-br.facebook.com/" + dados['NOME_FANTASIA'].str.lower().replace(" ","",regex=True)
     dados['INSTAGRAM']  = "@"+ dados['NOME_FANTASIA'].str.lower().replace(" ","", regex=True)
