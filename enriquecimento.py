@@ -5,21 +5,14 @@ import re
 import os
 import translators.server as tss
 import concurrent.futures
-import requests
-from requests.adapters import HTTPAdapter
+from geopy.geocoders import Nominatim
+
+geolocator = Nominatim(user_agent="geoapiExercises")
 
 
 def get_lat_long(cep:str):
-    """Busca Latitude e Longitude de um CEP válido informado"""
-    url = f'https://viacep.com.br/ws/{cep}/json/'
-    response = requests.get(url)
-    if response.status_code == 200:
-        location = response.json()
-        lat = location.get("latitude")
-        lng = location.get("longitude")
-        return lat, lng
-    else:
-        return -0, 0
+    location = geolocator.geocode(cep)
+    return location.latitude, location.longitude
 
 def thread_get_lat_long(cep_list):
     """Implanta o multithreading na função `get_lat_long`"""
