@@ -9,7 +9,7 @@ from googletrans import Translator
 
 def get_lat_long(cep):
     geo = pgeocode.Geo("BR")
-    geo = pgeocode.
+    geo = pgeocode.GeoDistance
     lat, lng = geo.coordinates(cep)
     return lat, lng
 

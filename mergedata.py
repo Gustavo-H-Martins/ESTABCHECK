@@ -60,7 +60,7 @@ for file_estabelecimento in all_files_estabelecimentos:
         merged_data['RUA'] = merged_data['TIPO_LOGRADOURO'] +' '+ merged_data['LOGRADOURO']
         merged_data.rename(columns={'UF':'ESTADO'}, inplace=True)
         merged_data = merged_data[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA','RUA', 'NUMERO','COMPLEMENTO', 'BAIRRO',
-            'CIDADE','ESTADO','CEP', 'TELEFONE', 'EMAIL', 'CNAE_PRINCIPAL','CNAE_DESCRICAO',]]
+            'CIDADE','ESTADO','CEP', 'TELEFONE1', 'CNAE_PRINCIPAL','CNAE_DESCRICAO',]]
         
         dados = pd.concat([dados, merged_data], ignore_index=True)
         
