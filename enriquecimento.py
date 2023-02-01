@@ -4,7 +4,10 @@ import json
 import re
 import os
 import translators.server as tss
+import logging
 
+# gerando log
+logging.basicConfig(level=logging.INFO, filename="enriquecimento.log", encoding='utf-8', format="%(asctime)s - %(levelname)s - %(message)s")
 # Ceps
 ceps = pd.read_csv('CEP\LISTA_CEP_LATITUDE_LONGITUDE.csv', sep=';')
 

@@ -8,3 +8,8 @@
 2023-02-01 09:33:59,919 - INFO - Lendo arquivo Bares e outros estabelecimentos especializados em servir bebidas sem entretenimento.csv
 2023-02-01 09:42:00,165 - INFO - Concluído processo de extração de 139389 dados do CNAE de Bares e outros estabelecimentos especializados em servir bebidas sem entretenimento.csv
 2023-02-01 09:42:00,165 - INFO - Lendo arquivo Lanchonetes casas de chá de sucos e similares.csv
+2023-02-01 09:48:42,945 - INFO - Concluído processo de extração de 433525 dados do CNAE de Lanchonetes casas de chá de sucos e similares.csv
+2023-02-01 09:48:42,945 - INFO - Lendo arquivo Restaurantes e similares.csv
+2023-02-01 09:58:12,618 - INFO - Concluído processo de extração de 385468 dados do CNAE de Restaurantes e similares.csv
+2023-02-01 09:58:12,621 - INFO - Lendo arquivo Serviços ambulantes de alimentação.csv
+2023-02-01 10:07:03,076 - INFO - Concluído processo de extração de 176693 dados do CNAE de Serviços ambulantes de alimentação.csv
