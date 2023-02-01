@@ -5,6 +5,8 @@ import re
 import os
 import translators.server as tss
 
+# Ceps
+ceps = pd.read_csv('CEP\LISTA_CEP_LATITUDE_LONGITUDE.csv', sep=';')
 
 def traduzir(texto):
     """ Traduz um texto informado do Português para o Inglês"""
@@ -35,6 +37,7 @@ for file in all_files:
     print(dados.shape[0])
     dadosc = pd.merge(dados,COORDENADAS,how='left', on='CEP')
     print(dados.shape[0])
+    dados.merge(ceps, on='CEP')
     dados['SITE'] = "www" + dados['NOME_FANTASIA'].str.lower().replace(" ", "", regex=True) + ".com"
     dados['FACEBOOK'] = "https://pt-br.facebook.com/" + dados['NOME_FANTASIA'].str.lower().replace(" ","",regex=True)
     dados['INSTAGRAM']  = "@"+ dados['NOME_FANTASIA'].str.lower().replace(" ","", regex=True)

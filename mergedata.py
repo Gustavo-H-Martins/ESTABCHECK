@@ -42,28 +42,30 @@ for file_estabelecimento in all_files_estabelecimentos:
     d_estabelecimento = pd.read_csv(f'{diretorio_estabelecimentos}{file_estabelecimento}', sep=';', dtype=dtypes_ESTABELE)
     #print(d_estabelecimento.columns)
     d_estabelecimento['CNPJ'] = d_estabelecimento[['CNPJ_BASE', 'CNPJ_ORDEM', 'CNPJ_DV']].apply(lambda x: ''.join(x), axis=1)
-    d_estabelecimento['CNPJ_BASE'] = pd.to_numeric(d_estabelecimento['CNPJ_BASE'], downcast='integer')
+    #d_estabelecimento['CNPJ_BASE'] = pd.to_numeric(d_estabelecimento['CNPJ_BASE'], downcast='integer')
     
     diretorio_empresa = r'base_csv_empresas/'
     all_files_empresa =  list(filter(lambda x: '.csv' in x, os.listdir(diretorio_empresa)))
 
     # Comparando com as empresas
     for file_empresa in all_files_empresa:
-        d_empresa = pd.read_csv(f'{diretorio_empresa}{file_empresa}',dtype=dtypes_EMPRESA,error_bad_lines=False, sep=';')
-        #print(d_empresa.columns)
-        d_empresa['CNPJ_BASE'] = pd.to_numeric(d_empresa['CNPJ_BASE'], downcast='integer')
-        merged_data = pd.merge(d_estabelecimento, d_empresa, on='CNPJ_BASE')
-    
 
-        # Tratando os dados para disposição
-        merged_data = pd.merge(merged_data, municipios, on='MUNICIPIO')
-        merged_data['RUA'] = merged_data['TIPO_LOGRADOURO'] +' '+ merged_data['LOGRADOURO']
-        merged_data.rename(columns={'UF':'ESTADO'}, inplace=True)
-        merged_data = merged_data[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA','RUA', 'NUMERO','COMPLEMENTO', 'BAIRRO',
-            'CIDADE','ESTADO','CEP', 'TELEFONE1', 'CNAE_PRINCIPAL','CNAE_DESCRICAO',]]
+        chunck_d_empresa = pd.read_csv(f'{diretorio_empresa}{file_empresa}',dtype=dtypes_EMPRESA,error_bad_lines=False, sep=';', chunksize=1000000)
+        for d_empresa in chunck_d_empresa:
+            #print(d_empresa.columns)
+            #d_empresa['CNPJ_BASE'] = pd.to_numeric(d_empresa['CNPJ_BASE'], downcast='integer', errors='ignore')
+            merged_data = pd.merge(d_estabelecimento, d_empresa, on='CNPJ_BASE')
         
-        dados = pd.concat([dados, merged_data], ignore_index=True)
-        
+
+            # Tratando os dados para disposição
+            merged_data = pd.merge(merged_data, municipios, on='MUNICIPIO')
+            merged_data['RUA'] = merged_data['TIPO_LOGRADOURO'] +' '+ merged_data['LOGRADOURO']
+            merged_data.rename(columns={'UF':'ESTADO'}, inplace=True)
+            merged_data = merged_data[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA','RUA', 'NUMERO','COMPLEMENTO', 'BAIRRO',
+                'CIDADE','ESTADO','CEP', 'TELEFONE1', 'CNAE_PRINCIPAL','CNAE_DESCRICAO',]]
+            
+            dados = pd.concat([dados, merged_data], ignore_index=True)
+            
     CAMADA1 = re.sub('base_csv_estabelecimentos','', file_estabelecimento)
     name_file = re.sub('["("")"?@|$|/|\|!,:%;"]','', CAMADA1)
     name_file_json = re.sub(".csv", '.json', name_file)

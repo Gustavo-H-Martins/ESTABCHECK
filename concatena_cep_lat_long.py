@@ -21,7 +21,7 @@ censo.rename(columns={'POSTCODE':'CEP'}, inplace=True)
 censo = censo[['CEP','LON', 'LAT']]
 censo.drop_duplicates(inplace=True)
 
-lista_cep_latitude = censo.loc[censo['CEP'].isin(list(cep['CEP']))].reset_index()
-lista_cep_latitude.rename(columns={'LON':'LONGITUDE', 'LAT':'LATITUDE'})
+lista_cep_latitude = censo.loc[censo['CEP'].isin(list(cep['CEP']))]
+lista_cep_latitude.rename(columns={'LON':'LONGITUDE', 'LAT':'LATITUDE'}, inplace=True)
 
-lista_cep_latitude.to_csv('LISTA_CEP_LATITUDE_LONGITUDE.csv',mode='w', sep=';', index=False)
+lista_cep_latitude.to_csv('LISTA_CEP_LATITUDE_LONGITUDE.csv',mode='w', index=False, sep=';')
