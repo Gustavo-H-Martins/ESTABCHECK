@@ -9,7 +9,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # gerando log
-logging.basicConfig(level=logging.INFO, filename="mergedata.log", encoding='utf-8', format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(level=logging.INFO, filename="./logs/mergedata.log", encoding='utf-8', format="%(asctime)s - %(levelname)s - %(message)s")
 
 # DataFrame Vazio
 Dados = pd.DataFrame()
