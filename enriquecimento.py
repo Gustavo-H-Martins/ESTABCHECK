@@ -33,23 +33,23 @@ comparador = pd.DataFrame(dict_comparador)
 # Diretórios
 diretorio = r'merge_base/'
 all_files = list(filter(lambda x: '.csv' in x, os.listdir(diretorio)))
-COORDENADAS = pd.read_csv(r".\CEP\LISTA_CEP_LATITUDE_LONGITUDE.csv", sep=';')
+
 for file in all_files:
     # Itera sobre todos os arquivos CSV no repositório
-    dados = pd.read_csv(f"{diretorio}{file}", sep=';')
-    print(dados.shape[0])
-    dadosc = pd.merge(dados,COORDENADAS,how='left', on='CEP')
-    print(dados.shape[0])
-    dados.merge(ceps, on='CEP')
-    dados['SITE'] = "www" + dados['NOME_FANTASIA'].str.lower().replace(" ", "", regex=True) + ".com"
+    dados = pd.read_csv(f"{diretorio}{file}", sep=';', dtype='object')
+    
+    dados = pd.merge(dados,ceps,how='left', on='CEP')
+    dados['SITE'] = "www." + dados['NOME_FANTASIA'].str.lower().replace(" ", "", regex=True) + ".com.br"
     dados['FACEBOOK'] = "https://pt-br.facebook.com/" + dados['NOME_FANTASIA'].str.lower().replace(" ","",regex=True)
     dados['INSTAGRAM']  = "@"+ dados['NOME_FANTASIA'].str.lower().replace(" ","", regex=True)
     dados['HORARIO_FUNCIONAMENTO'] = None
     dados['OPCOES_DE_SERVICO'] = None
-
+    
+    
+    
     dados = dados[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA', 'RUA', 'NUMERO', 'COMPLEMENTO',
-       'BAIRRO', 'CIDADE', 'ESTADO', 'CEP','LATITUDE', 'LONGITUDE', 'TELEFONE', 'SITE',
-       'CNAE_DESCRICAO', 'HORARIO_FUNCIONAMENTO', 'INSTAGRAM', 'FACEBOOK', 'OPCOES_DE_SERVICO']]
+    'BAIRRO', 'CIDADE', 'ESTADO', 'CEP','LATITUDE', 'LONGITUDE', 'TELEFONE1', 'SITE',
+    'CNAE_DESCRICAO', 'HORARIO_FUNCIONAMENTO', 'INSTAGRAM', 'FACEBOOK', 'OPCOES_DE_SERVICO']]
     # Cria uma cópia para converter para o Inglês
     data = dados.copy()
 
