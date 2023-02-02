@@ -1,17 +1,26 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
+const cors  =require("cors");
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
+
 
 const app = express();
-const port = 3000;
+const HTTP_PORT = 8000;
 
-// parse application/x-www-form-urlencoded
+// parse aplicativo/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-// Connect to SQLite3 database
+// permitir acesso a API com CORS
+app.use(cors(corsOptions)) ;
+// Conectar ao banco de dados SQLite3
 const db = new sqlite3.Database('../database/br_base_cnpj.db', (err) => {
   if (err) {
     console.error(err.message);
@@ -19,7 +28,7 @@ const db = new sqlite3.Database('../database/br_base_cnpj.db', (err) => {
   console.log('conectado no banco de dados "br_base_cnpj".');
 });
 
-// Get all data from the database
+// Obter todos os dados de CNPJ
 app.get('/cnpjs', (req, res) => {
   db.all('SELECT * FROM estabelecimentos LIMIT 20000', (err, rows) => {
     if (err) {
@@ -32,7 +41,7 @@ app.get('/cnpjs', (req, res) => {
   });
 });
 
-// Get data by CNPJ
+// Obter os dados por CNPJ
 app.get('/cnpjs/:cnpj', (req, res) => {
   const cnpj = req.params.cnpj;
   db.get(`SELECT * FROM estabelecimentos WHERE CNPJ = ?`, [cnpj], (err, row) => {
@@ -50,7 +59,7 @@ app.get('/cnpjs/:cnpj', (req, res) => {
   });
 });
 
-// Insert data into the database
+// Insere dados no banco de dados CNPJ
 app.post('/cnpjs', (req, res) => {
   const cnpj = req.body.cnpj;
   const razao_social = req.body.razao_social;
@@ -84,7 +93,7 @@ app.post('/cnpjs', (req, res) => {
   });
   });
   
-  // Update data in the database
+  // Update em um dado no banco CNPJ
   app.put('/cnpjs/:cnpj', (req, res) => {
   const cnpj = req.params.cnpj;
   const razao_social = req.body.razao_social;
@@ -116,7 +125,7 @@ app.post('/cnpjs', (req, res) => {
 });
 });
 
-// Delete data from the database
+// Deleta um dado no Banco CNPJ
 app.delete('/cnpjs/:cnpj', (req, res) => {
 const cnpj = req.params.cnpj;
 
@@ -131,7 +140,12 @@ message: `CNPJ ${cnpj} deletado com sucesso`
 });
 });
 
-// Start the server
-app.listen(port, () => {
-console.log(`Server rodando na porta:  ${port}`);
+// Pega o ip do servidor
+var ip = require("ip");
+console.dir ( ` O Servidor tem o seguinte IP Público Local ${ip.address()} `);
+
+// Inicia o servidor
+
+app.listen(HTTP_PORT, () => {
+    console.log("O servidor está escutando na porta " + HTTP_PORT);
 });
