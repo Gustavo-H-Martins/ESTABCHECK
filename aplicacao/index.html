@@ -1,0 +1,11 @@
+const URL = `https://openexchangerates.org/api/latest.json?app_id=${process.env.OPENEXCHANGEAPITOKEN}`;
+
+exports.cotacao = async (req, res) => {
+    try {
+        const resultado = await fetch(URL)
+        req.oexchange = await resultado.json()
+        res.status(200).json(req.oexchange)
+    } catch (e) {
+        res.status(500).json({errors: [{ location: 'cotacao', msg: 'Houve um erro ao acessar a api do open exchange.', param: 'openexchangerates' }]})
+    }
+};
