@@ -88,7 +88,7 @@
        new agGrid.Grid(eGridDiv, gridOptions);
        let cnpj = document.getElementById("CNPJ");
        // Busca dados do servidor
-       fetch(`http://localhost:3000/estabelecimentos/get/cnpj=${cnpj}`)
+       fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj}`)
        .then(response => response.json())
        .then(data => {
          // carrega os dados buscados na grade
