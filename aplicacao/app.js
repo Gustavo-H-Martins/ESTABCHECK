@@ -50,7 +50,7 @@ app.get('/estabelecimentos/get/cnpj=:cnpj', (req, res) => {
       return;
     }
     if (!row) {
-      res.status(404).json({ error: `CNPJ ${cnpj} not found` });
+      res.status(404).json({ error: `CNPJ ${cnpj} não encontrado na base` });
       return;
     }
     res.json({
