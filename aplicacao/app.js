@@ -29,7 +29,7 @@ const db = new sqlite3.Database('../database/br_base_cnpj.db', (err) => {
 });
 
 // Obter todos os dados de CNPJ
-app.get('/cnpjs', (req, res) => {
+app.get('/estabelecimentos/get/all', (req, res) => {
   db.all('SELECT * FROM estabelecimentos LIMIT 20000', (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -42,7 +42,7 @@ app.get('/cnpjs', (req, res) => {
 });
 
 // Obter os dados por CNPJ
-app.get('/cnpjs/:cnpj', (req, res) => {
+app.get('/estabelecimentos/get/cnpj=:cnpj', (req, res) => {
   const cnpj = req.params.cnpj;
   db.get(`SELECT * FROM estabelecimentos WHERE CNPJ = ?`, [cnpj], (err, row) => {
     if (err) {
@@ -60,7 +60,7 @@ app.get('/cnpjs/:cnpj', (req, res) => {
 });
 
 // Insere dados no banco de dados CNPJ
-app.post('/cnpjs', (req, res) => {
+app.post('/estabelecimentos/insert/cnpj', (req, res) => {
   const cnpj = req.body.cnpj;
   const razao_social = req.body.razao_social;
   const nome_fantasia = req.body.nome_fantasia;
@@ -94,7 +94,7 @@ app.post('/cnpjs', (req, res) => {
   });
   
   // Update em um dado no banco CNPJ
-  app.put('/cnpjs/:cnpj', (req, res) => {
+  app.put('/estabelecimentos/update/cnpj=:cnpj', (req, res) => {
   const cnpj = req.params.cnpj;
   const razao_social = req.body.razao_social;
   const nome_fantasia = req.body.nome_fantasia;
@@ -126,8 +126,10 @@ app.post('/cnpjs', (req, res) => {
 });
 
 // Deleta um dado no Banco CNPJ
-app.delete('/cnpjs/:cnpj', (req, res) => {
+app.delete('/estabelecimentos/delete/cnpj=:cnpj', (req, res) => {
 const cnpj = req.params.cnpj;
+const usuario = req.body.usuario;
+const chave_acesso = req.body.chave_acesso;
 
 db.run(`DELETE FROM estabelecimentos WHERE CNPJ = ?`, cnpj, (err) => {
 if (err) {
