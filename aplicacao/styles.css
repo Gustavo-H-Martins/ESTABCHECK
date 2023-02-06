@@ -1,0 +1,31 @@
+table {
+    text-align: center;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    grid-column: auto;
+    grid-row: auto;
+    border: ridge;
+}
+th {
+    border: ridge;
+}
+.field_add{
+    padding: auto;
+}
+.div_add{
+    display: grid;
+    align-items: center;
+}
+form  input{
+    text-align: center;
+    display: grid;
+    width: 500px;
+    padding: auto;
+}
+label {
+    text-align:right;
+	display: grid;
+	float: left;
+    width: 200px;
+}
