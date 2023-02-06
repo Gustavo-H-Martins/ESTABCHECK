@@ -11,7 +11,7 @@ const corsOptions ={
 
 
 const app = express();
-const HTTP_PORT = 8000;
+const HTTP_PORT = 3000;
 
 // parse aplicativo/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -28,37 +28,61 @@ const db = new sqlite3.Database('../database/br_base_cnpj.db', (err) => {
   }
   console.log('conectado no banco de dados "br_base_cnpj".');
 });
+class LeitorStream extends stream.Readable{
+  constructor(options){
+    super(options);
+    this.data = options.data;
+  }
+
+  _read() {
+    this.push(this.data);
+    this.push(null);
+  }
+}
 
 // Obter todos os dados de CNPJ
 app.get('/estabelecimentos/get/all', (req, res) => {
-  db.all('SELECT * FROM estabelecimentos LIMIT 20000', (err, rows) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    res.json(
-      rows
-    );
-  });
+    res.set('Content-Type', 'application/json');
+    res.writeHead(200, {'Content-Type':'application/json',
+    'Transfer-Encoding':'chunked'
+    });
+
+    const chunk = data => res.write([data]);
+    
+    const timeoutId = setTimeout(function () {
+      console.error("Timeout na requisição");
+      res.end();
+    }, 200);
+
+    db.each('SELECT * FROM estabelecimentos ', (err, row) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        clearTimeout(timeoutId);
+        return;
+      }
+    },() => {
+        clearTimeout(timeoutId);
+        res.end();
+    });
 });
 
 // Obter os dados por CNPJ
 app.get('/estabelecimentos/get/cnpj=:cnpj', (req, res) => {
-  const cnpj = req.params.cnpj;
-  db.get(`SELECT * FROM estabelecimentos WHERE CNPJ = ?`, [cnpj], (err, row) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-      return;
-    }
-    if (!row) {
-      res.status(404).json({ error: `CNPJ ${cnpj} não encontrado na base` });
-      return;
-    }
-    res.json(
-      row
-    );
+    const cnpj = req.params.cnpj;
+    db.get(`SELECT * FROM estabelecimentos WHERE CNPJ = ?`, [cnpj], (err, row) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      if (!row) {
+        res.status(404).json({ error: `CNPJ ${cnpj} não encontrado na base` });
+        return;
+      }
+      res.json(
+        row
+      );
+    });
   });
-});
 
 // Insere dados no banco de dados CNPJ
 app.post('/estabelecimentos/insert/cnpj', (req, res) => {

@@ -47,9 +47,45 @@
             <label for="facebook">Facebook:</label>
             <input type="text" id="facebook" name="facebook" required><br>
             <label for="servicos">Opções de serviço:</label>
-            <input type="text" id="servicos" name="servicos" required><br>            
+            <input type="text" id="servicos" name="servicos" required><br>    
+            <button type="submit">Enviar</button>        
           </form>
       </div>
     </fieldset>
+    <script>
+      const formulario = document.getElementById('formulario');
+      formulario.addEventListener('submit', (event) => {
+        event.preventDefault();
+    
+        const dados = new FormData(formulario);
+        const dadosJSON = {};
+    
+        dados.forEach((valor, chave) => {
+          dadosJSON[chave] = valor;
+        });
+    
+        fetch('http://localhost:8000/estabelecimentos/insert/cnpj', {
+          method: 'POST',
+          body: JSON.stringify(dadosJSON),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then((resposta) => {
+            if (!resposta.ok) {
+              throw new Error('Erro ao enviar os dados');
+            }
+            return resposta.json();
+          })
+          .then((dados) => {
+            console.log(dados);
+            // faça alguma coisa com a resposta da API
+          })
+          .catch((erro) => {
+            console.error(erro);
+            // trate o erro aqui
+          });
+      });
+    </script>
   </body>
 </html>

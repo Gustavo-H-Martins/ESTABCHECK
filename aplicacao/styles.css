@@ -6,16 +6,19 @@ table {
     grid-column: auto;
     grid-row: auto;
     border: ridge;
+    width: 100%;
+}
+td {
+    border: 1px, solid #f7941d;
+    padding: auto;   
+}
+
+tr{
+    padding: auto;
+    border: 1px, ridge #016a0d;
 }
 th {
-    border: ridge;
-}
-.field_add{
-    padding: auto;
-}
-.div_add{
-    display: grid;
-    align-items: center;
+    border: 1px, ridge #016a0d;
 }
 form  input{
     text-align: center;

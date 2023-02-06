@@ -5,46 +5,43 @@
     <meta charset="UTF-8">
     <title>CRUD interface</title>
     <link rel="stylesheet" href="">
-    <script type="text/javascript" src="js/meu-arquivo.js"></script>
+    <script src="chamadas_api.js"></script>
   </head>
   <body>
-    <button id="update-data-button">Atualizar Dados</button>
-    <script>
-      document.querySelector('#update-data-button').addEventListener('click', getDataAndUpdatePage);
-    </script>
+  <button onclick="atualizaPainel()">Atualizar Dados</button>
     <!-- Tabela para exibir todos os dados -->
-    <table id="all-cnpjs">
-      <thead>
-        <tr>
-          <th>CNPJ</th>
-          <th>Razão social</th>
-          <th>Nome fantasia</th>
-          <th>Rua</th>
-          <th>Número</th>
-          <th>Complemento</th>
-          <th>Bairro</th>
-          <th>Cidade</th>
-          <th>Estado</th>
-          <th>CEP</th>
-          <th>Latitude</th>
-          <th>Longitude</th>
-          <th>Telefone 1</th>
-          <th>Site</th>
-          <th>CNAE Descrição</th>
-          <th>Horário de funcionamento</th>
-          <th>Instagram</th>
-          <th>Facebook</th>
-          <th>Opções de serviço</th>
-        </tr>
-      </thead>
-      <tbody id="all-cnpjs-body">
-        <!-- Será preenchido com dados da API -->
-      </tbody>
-    </table>
-    <div class="container">
-      <a href="./adicionar.html">
-          <button class="bt-adiciona">Adicionar registro</button>
-      </a>
-  </div>
+      <table id="cnpjs">
+        <thead>
+          <tr>
+            <th>CNPJ</th>
+            <th>Razão social</th>
+            <th>Nome fantasia</th>
+            <th>Rua</th>
+            <th>Número</th>
+            <th>Complemento</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>CEP</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Telefone 1</th>
+            <th>Site</th>
+            <th>CNAE Descrição</th>
+            <th>Horário de funcionamento</th>
+            <th>Instagram</th>
+            <th>Facebook</th>
+            <th>Opções de serviço</th>
+          </tr>
+        </thead>
+        <tbody id="corpo-tabela">
+          
+        </tbody>
+      </table>
   </body>
+  <footer>
+    <a href="./adicionar.html">
+      <button class="bt-adiciona">Adicionar registro</button>
+    </a>
+  </footer>
 </html>
