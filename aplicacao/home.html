@@ -4,8 +4,14 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <meta charset="UTF-8">
     <title>CRUD interface</title>
+    <link rel="stylesheet" href="">
+    <script type="text/javascript" src="js/meu-arquivo.js"></script>
   </head>
   <body>
+    <button id="update-data-button">Atualizar Dados</button>
+    <script>
+      document.querySelector('#update-data-button').addEventListener('click', getDataAndUpdatePage);
+    </script>
     <!-- Tabela para exibir todos os dados -->
     <table id="all-cnpjs">
       <thead>
