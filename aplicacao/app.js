@@ -1,4 +1,4 @@
-const stream = require('stream');
+const fs = require('fs');
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
@@ -11,7 +11,7 @@ const corsOptions ={
 
 
 const app = express();
-const HTTP_PORT = 8000;
+const PORTA = 8000;
 
 // parse aplicativo/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -28,10 +28,29 @@ const db = new sqlite3.Database('../database/br_base_cnpj.db', (err) => {
   }
   console.log('conectado no banco de dados "br_base_cnpj".');
 });
+// home da api
+app.get('/estabelecimentos', (req, res) =>{
+  retorno = `Bem vindo a api de acesso aos dados de estabelecimentos
+  Neste ambiente temos acesso aos seguintes dados de GET (Delete, Update e Create não serão expostos aqui)
+  ./estabelecimentos/get/all
+  Retorna todos os dados de estabelecimentos na base (cuidado pra sua máquina não arriar)
 
+  ./estabelecimentos/get/cnpj={cnpj}
+  Retorna dados de um estabelecimento em específico passando o parâmetro cnpj sem caracteres especiais (somente números)
+  
+  '/estabelecimentos/get/uf={uf}'
+  Retorna todos os estabelecimentos dentro da uf informada
+  `
+  res.json(
+    retorno
+  )
+})
+/*
+  MÉTODOS GET
+*/
 // Obter todos os dados de CNPJ
 app.get('/estabelecimentos/get/all', (req, res) => {
-  db.all('SELECT * FROM estabelecimentos LIMIT 20000', (err, rows) => {
+  db.all('SELECT * FROM estabelecimentos LIMIT 2000', (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -60,6 +79,25 @@ app.get('/estabelecimentos/get/cnpj=:cnpj', (req, res) => {
   });
 });
 
+// Obter dados pelo estado
+app.get('/estabelecimentos/get/uf=:uf', (req, res) =>{
+  var uf = req.params.uf.toUpperCase();
+  db.all(`SELECT * FROM estabelecimentos WHERE ESTADO = ?`, [uf], (err, rows) =>{
+    if(err) {
+      res.status(500).json({error: err.message});
+      return;
+    }
+    console.log(`Retornando ${rows.length} dados do ${uf}`)
+    res.json(
+      rows
+    );
+  });
+});
+
+
+/*
+  MÉTODOS POST
+*/
 // Insere dados no banco de dados CNPJ
 app.post('/estabelecimentos/insert/cnpj', (req, res) => {
   const cnpj = req.body.cnpj;
@@ -145,10 +183,10 @@ message: `CNPJ ${cnpj} deletado com sucesso`
 
 // Pega o ip do servidor
 var ip = require("ip");
-console.dir ( ` O Servidor tem o seguinte IP Público Local ${ip.address()} `);
+//console.dir ( `O Servidor tem o seguinte IP Público Local ${ip.address()} `);
 
 // Inicia o servidor
 
-app.listen(HTTP_PORT, () => {
-    console.log("O servidor está escutando na porta " + HTTP_PORT);
+app.listen(PORTA, () => {
+    console.log(`O servidor está escutando na porta ${PORTA} url: http://${ip.address()}:${PORTA}/estabelecimentos/` );
 });
