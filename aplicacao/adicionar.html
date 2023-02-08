@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="styles.css"/>
     <meta charset="UTF-8">
     <title>CRUD interface</title>
@@ -11,7 +12,7 @@
         <!-- Formulário para adicionar novo CNPJ -->
         <form id="add-cnpj-form">
             <label for="cnpj">CNPJ:</label>
-            <input type="text" id="cnpj" name="cnpj" required><br>
+            <input type="text" id="cnpj" placeholder="Insira um CNPJ" name="cnpj" required><br>
             <label for="razao-social">Razão social:</label>
             <input type="text" id="razao-social" name="razao_social" required><br>
             <label for="nome-fantasia">Nome fantasia:</label>
@@ -85,6 +86,35 @@
             console.error(erro);
             // trate o erro aqui
           });
+      });
+    </script>
+    <script>
+      const inputCnpj = document.querySelector("input[name='cnpj']");
+      inputCnpj.addEventListener("change", (event) => {
+        const cnpj = event.target.value;
+        alert(cnpj)
+        fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj}`)
+          .then((response) => response.json())
+          .then((data) => {
+            document.querySelector("input[name='razao_social']").value = data.RAZAO_SOCIAL;
+            document.querySelector("input[name='nome_fantasia']").value = data.NOME_FANTASIA;
+            document.querySelector("input[name='rua']").value = data.RUA;
+            document.querySelector("input[name='numero']").value = data.NUMERO;
+            document.querySelector("input[name='complemento']").value = data.COMPLEMENTO;
+            document.querySelector("input[name='bairro']").value = data.BAIRRO;
+            document.querySelector("input[name='cidade']").value = data.CIDADE;
+            document.querySelector("input[name='estado']").value = data.ESTADO;
+            document.querySelector("input[name='cep']").value = data.CEP;
+            document.querySelector("input[name='latitude']").value = data.LATITUDE;
+            document.querySelector("input[name='longitude']").value = data.LONGITUDE;
+            document.querySelector("input[name='telefone']").value = data.TELEFONE1;
+            document.querySelector("input[name='site']").value = data.SITE;
+            document.querySelector("input[name='cnae']").value = data.CNAE_DESCRICAO;
+            document.querySelector("input[name='funcionamento']").value = data.HORARIO_FUNCIONAMENTO;
+            document.querySelector("input[name='instagram']").value = data.INSTAGRAM;
+            document.querySelector("input[name='facebook']").value = data.FACEBOOK;
+            document.querySelector("input[name='servicos']").value = data.OPCOES_DE_SERVICO;
+        });
       });
     </script>
   </body>
