@@ -4,17 +4,11 @@ function atualizaPainel(){
   .then(function (res) {
     return res.json();
   }).then(function (apiData) {
-    renderizaDadosNaTabela(apiData, 50);
-
+    renderizaDadosNaTabela(apiData);
   });
 }
 
 function renderizaDadosNaTabela(dados, chunkSize) {
-  
-  const inicio = paginaAtual * tamanhoPagina;
-  const fim = inicio + tamanhoPagina;
-  const paginaDados = dados.slice(inicio, fim);
-
   const tabela = document.getElementById("corpo-tabela");
   for (let i = 0; i < dados.length; i += chunkSize) {
     let chunk = dados.slice(i, i + chunkSize);
