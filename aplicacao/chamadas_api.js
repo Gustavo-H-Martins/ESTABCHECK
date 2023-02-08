@@ -8,13 +8,6 @@ function atualizaPainel(){
 
   });
 }
-const tabela = document.getElementById('cnpjs');
-const corpoTabela = document.getElementById('cnpjs');
-const anterior = document.getElementById('anterior');
-const proximo = document.getElementById('proximo');
-
-const tamanhoPagina = 50;
-let paginaAtual = 0;
 
 function renderizaDadosNaTabela(dados, chunkSize) {
   
@@ -36,18 +29,3 @@ function renderizaDadosNaTabela(dados, chunkSize) {
     });
   }
 }
-
-anterior.addEventListener('click', () =>{
-  if (paginaAtual > 0) {
-    paginaAtual--;
-    renderizaDadosNaTabela(apiData, 50);
-  }
-});
-
-proximo.addEventListener('click', () => {
-  if (paginaAtual < Math.ceil(dados.length / tamanhoPagina) -1) {
-    paginaAtual ++;
-    renderizaDadosNaTabela(apiData, 50);
-  }
-});
-

@@ -30,21 +30,21 @@ const db = new sqlite3.Database('../database/br_base_cnpj.db', (err) => {
 });
 // home da api
 app.get('/estabelecimentos', (req, res) =>{
-  retorno = `Bem vindo a api de acesso aos dados de estabelecimentos
-  Neste ambiente temos acesso aos seguintes dados de GET (Delete, Update e Create não serão expostos aqui)
-  ./estabelecimentos/get/all
+  retorno = `Bem vindo a api de acesso aos dados de estabelecimentos 
+  Neste ambiente temos acesso aos seguintes dados de GET (Delete, Update e Create não serão expostos aqui) 
+  http://${ip.address()}:${PORTA}/estabelecimentos/get/all 
   Retorna todos os dados de estabelecimentos na base (cuidado pra sua máquina não arriar)
-
-  ./estabelecimentos/get/cnpj={cnpj}
+  
+  http://${ip.address()}:${PORTA}/estabelecimentos/get/cnpj={cnpj}
   Retorna dados de um estabelecimento em específico passando o parâmetro cnpj sem caracteres especiais (somente números)
   
-  '/estabelecimentos/get/uf={uf}'
+  'http://${ip.address()}:${PORTA}/estabelecimentos/get/uf={uf}'
   Retorna todos os estabelecimentos dentro da uf informada
   `
-  res.json(
+  res.status(200).send(
     retorno
   )
-})
+});
 /*
   MÉTODOS GET
 */
