@@ -1,25 +1,38 @@
-function atualizaPainel(){
-  var url = 'http://localhost:8000/estabelecimentos/get/all'
-  fetch(url)
-  .then(function (res) {
-    return res.json();
-  }).then(function (apiData) {
-    renderizaDadosNaTabela(apiData);
-  });
-}
+// Adiciona dados na tabela
+async function atualizaPainel() {
+  try {
+    const response = await fetch('http://localhost:8000/estabelecimentos/get/all');
+    const dados = await response.json();
+    let data = dados.slice(0,200)
+    // Aqui você pode manipular os dados como quiser
 
-function renderizaDadosNaTabela(dados, chunkSize) {
-  const tabela = document.getElementById("corpo-tabela");
-  for (let i = 0; i < dados.length; i += chunkSize) {
-    let chunk = dados.slice(i, i + chunkSize);
-    chunk.forEach(dado => {
-      let novaLinha = document.createElement("tr");
-      Object.values(dado).forEach((value) => {
-        let celula = document.createElement("td");
-        celula.innerText = value;
-        novaLinha.appendChild(celula);
-      });
-      tabela.appendChild(novaLinha);
+    const corpoTabela = document.getElementById("corpo-tabela");
+
+    data.forEach((linha) => {
+      const tr = document.createElement('tr');
+      for (const key in linha) {
+        let td = document.createElement("td");
+        td.classList.add(key);
+        td.innerText = linha[key];
+        if (key === "CNPJ") {
+          td.innerHTML = td.innerHTML.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+        }
+        tr.appendChild(td);
+      /*Object.values(linha).forEach((valor) => {
+        const td = document.createElement('td');
+        td.innerText = valor;
+        tr.appendChild(td);
+      });*/
+    }
+      corpoTabela.appendChild(tr);
     });
+  } catch (error) {
+    console.error(error);
   }
 }
+
+// Formata os CNPJ
+const form_cnpj = document.querySelector("td[class='CNPJ']");
+      form_cnpj.addEventListener("change", (event) => {
+          document.querySelector("td[class='CNPJ']").value = document.querySelector("td[class='CNPJ']").value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
+          });
