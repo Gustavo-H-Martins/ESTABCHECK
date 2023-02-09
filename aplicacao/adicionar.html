@@ -36,19 +36,19 @@
             <label for="longitude">Longitude:</label>
             <input type="text" id="longitude" name="longitude" required><br> 
             <label for="telefone">Telefone 1:</label>
-            <input type="text" id="telefone" name="telefone" required><br>            
+            <input type="text" id="telefone1" name="telefone1" required><br>            
             <label for="site">Site:</label>
             <input type="text" id="site" name="site" required><br>            
             <label for="cnae">CNAE Descrição:</label>
-            <input type="text" id="cnae" name="cnae" required><br>
+            <input type="text" id="cnae-descricao" name="cnae_descricao" required><br>
             <label for="funcionamento">Horário de funcionamento:</label>
-            <input type="text" id="funcionamento" name="funcionamento" required><br>
+            <input type="text" id="horario-funcionamento" name="horario_funcionamento" required><br>
             <label for="instagram">Instagram:</label>
             <input type="text" id="instagram" name="instagram" required><br>
             <label for="facebook">Facebook:</label>
             <input type="text" id="facebook" name="facebook" required><br>
             <label for="servicos">Opções de serviço:</label>
-            <input type="text" id="servicos" name="servicos" required><br>    
+            <input type="text" id="opcoes-de-servico" name="opcoes_de_servico" required><br>    
             <button type="submit">Enviar</button>        
           </form>
       </div>
@@ -62,6 +62,7 @@
         for (let i = 0; i < formElements.length; i++) {
           const input = formElements[i];
           if (input.name) {
+            alert(input.name);
             formData[input.name] = input.value;
           }
         }
@@ -72,17 +73,17 @@
         request.send(JSON.stringify(formData));
       });
     </script>
+    <!--
     <script>
       const inputCnpj = document.querySelector("input[name='cnpj']");
       inputCnpj.addEventListener("change", (event) => {
         const cnpj = event.target.value.replace(/[^0-9]/g, '');
-        /*
-        console.log(cnpj);
-        alert(cnpj)
-        */
         fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj}`)
           .then((response) => response.json())
           .then((data) => {
+            if (!data.RAZAO_SOCIAL) {
+              data.RAZAO_SOCIAL = '';
+            }
             document.querySelector("input[name='razao_social']").value = data.RAZAO_SOCIAL;
             document.querySelector("input[name='nome_fantasia']").value = data.NOME_FANTASIA;
             document.querySelector("input[name='rua']").value = data.RUA;
@@ -94,15 +95,48 @@
             document.querySelector("input[name='cep']").value = data.CEP;
             document.querySelector("input[name='latitude']").value = data.LATITUDE;
             document.querySelector("input[name='longitude']").value = data.LONGITUDE;
-            document.querySelector("input[name='telefone']").value = data.TELEFONE1;
+            document.querySelector("input[name='telefone1']").value = data.TELEFONE1;
             document.querySelector("input[name='site']").value = data.SITE;
-            document.querySelector("input[name='cnae']").value = data.CNAE_DESCRICAO;
-            document.querySelector("input[name='funcionamento']").value = data.HORARIO_FUNCIONAMENTO;
+            document.querySelector("input[name='cnae_descricao']").value = data.CNAE_DESCRICAO;
+            document.querySelector("input[name='horario_funcionamento']").value = data.HORARIO_FUNCIONAMENTO;
             document.querySelector("input[name='instagram']").value = data.INSTAGRAM;
             document.querySelector("input[name='facebook']").value = data.FACEBOOK;
-            document.querySelector("input[name='servicos']").value = data.OPCOES_DE_SERVICO;
+            document.querySelector("input[name='opcoes_de_servico']").value = data.OPCOES_DE_SERVICO;
         });
       });
+    </script>
+    -->
+    <script>
+      const inputCnpj = document.querySelector("input[name='cnpj']");
+        inputCnpj.addEventListener("change", (event) => {
+        const cnpj = event.target.value;
+        fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
+        .then((response) =>
+          response.json())
+        .then((data) => {
+          const formElements = document.getElementById("add-cnpj-form").elements;
+          for (let i = 1; i < formElements.length; i++) {
+            const nome = formElements[i].name;
+            const valor = formElements[i].value
+            //alert(document.querySelector(`input[name='${nome}']`))
+            const value = data[nome.toUpperCase()];
+            document.querySelector(`input[name='${nome}']`).value = value || "";
+          }
+        });
+      fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
+      .then((response) => {
+        if (response.status === 200) {
+        } else {
+          alert(`CNPJ: ${cnpj} não encontrado!`)
+        }
+      });
+      });
+    </script>
+    <script>
+      const form_cnpj = document.querySelector("input[name='cnpj']");
+      form_cnpj.addEventListener("change", (event) => {
+          document.querySelector("input[name='cnpj']").value = document.querySelector("input[name='cnpj']").value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
+          });
     </script>
   </body>
 </html>

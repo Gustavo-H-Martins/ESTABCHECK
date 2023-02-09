@@ -100,7 +100,7 @@ app.get('/estabelecimentos/get/uf=:uf', (req, res) =>{
 */
 // Insere dados no banco de dados CNPJ
 app.post('/estabelecimentos/insert/cnpj', (req, res) => {
-  const cnpj = req.body.cnpj;
+  const cnpj = req.body.cnpj.replace(/[^0-9]/g, '');
   const razao_social = req.body.razao_social;
   const nome_fantasia = req.body.nome_fantasia;
   const rua = req.body.rua;
@@ -134,7 +134,7 @@ app.post('/estabelecimentos/insert/cnpj', (req, res) => {
   
   // Update em um dado no banco CNPJ
   app.put('/estabelecimentos/update/cnpj=:cnpj', (req, res) => {
-  const cnpj = req.params.cnpj;
+  const cnpj = req.params.cnpj.replace(/[^0-9]/g, '');
   const razao_social = req.body.razao_social;
   const nome_fantasia = req.body.nome_fantasia;
   const rua = req.body.rua;
