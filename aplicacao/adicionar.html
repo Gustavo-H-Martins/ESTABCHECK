@@ -54,45 +54,32 @@
       </div>
     </fieldset>
     <script>
-      const formulario = document.getElementById('formulario');
-      formulario.addEventListener('submit', (event) => {
+      document.getElementById("add-cnpj-form").addEventListener("submit", function (event) {
         event.preventDefault();
-    
-        const dados = new FormData(formulario);
-        const dadosJSON = {};
-    
-        dados.forEach((valor, chave) => {
-          dadosJSON[chave] = valor;
-        });
-    
-        fetch('http://localhost:8000/estabelecimentos/insert/cnpj', {
-          method: 'POST',
-          body: JSON.stringify(dadosJSON),
-          headers: {
-            'Content-Type': 'application/json'
+
+        const formData = {};
+        const formElements = document.getElementById("add-cnpj-form").elements;
+        for (let i = 0; i < formElements.length; i++) {
+          const input = formElements[i];
+          if (input.name) {
+            formData[input.name] = input.value;
           }
-        })
-          .then((resposta) => {
-            if (!resposta.ok) {
-              throw new Error('Erro ao enviar os dados');
-            }
-            return resposta.json();
-          })
-          .then((dados) => {
-            console.log(dados);
-            // faça alguma coisa com a resposta da API
-          })
-          .catch((erro) => {
-            console.error(erro);
-            // trate o erro aqui
-          });
+        }
+        alert(JSON.stringify(formData))
+        const request = new XMLHttpRequest();
+        request.open("POST", "http://localhost:8000/estabelecimentos/insert/cnpj", true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send(JSON.stringify(formData));
       });
     </script>
     <script>
       const inputCnpj = document.querySelector("input[name='cnpj']");
       inputCnpj.addEventListener("change", (event) => {
-        const cnpj = event.target.value;
+        const cnpj = event.target.value.replace(/[^0-9]/g, '');
+        /*
+        console.log(cnpj);
         alert(cnpj)
+        */
         fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj}`)
           .then((response) => response.json())
           .then((data) => {
