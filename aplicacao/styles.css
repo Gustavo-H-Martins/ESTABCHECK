@@ -32,3 +32,29 @@ label {
 	float: left;
     width: 200px;
 }
+
+footer {
+    background-color: #198e4a;
+    text-align: center;
+    display: flex;
+    bottom: 0;
+    position: fixed ;
+    margin: auto;
+    width: 100%;
+    height: 50px;
+}
+
+button{
+    background-color: #f7941d;
+    margin:auto;
+    text-align: center;
+    position: relative;
+}
+
+.copyright  {
+    text-align: center;
+    padding: auto;
+    position: fixed;
+    left: 80%;
+    color: #ffff;
+}
