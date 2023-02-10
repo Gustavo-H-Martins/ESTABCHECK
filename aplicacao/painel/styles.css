@@ -60,7 +60,20 @@ button{
     color: #ffff;
 }
 
-button, .params-api {
+button {
+    color: #FFF;
+    background-color: #f7941d;  
+    height: 30px;
+    line-height: 30px;
+    padding: 0 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 30px;
+    text-align: center;
+    position: relative;
+}
+.params-api {
     color: #FFF;
     background-color: #f7941d;  
     height: 30px;
