@@ -14,6 +14,7 @@ async function atualizaPainel() {
         let td = document.createElement("td");
         td.classList.add(key);
         td.innerText = linha[key];
+        // Formata os CNPJ
         if (key === "CNPJ") {
           td.innerHTML = td.innerHTML.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
         }
@@ -31,8 +32,5 @@ async function atualizaPainel() {
   }
 }
 
-// Formata os CNPJ
-const form_cnpj = document.querySelector("td[class='CNPJ']");
-      form_cnpj.addEventListener("change", (event) => {
-          document.querySelector("td[class='CNPJ']").value = document.querySelector("td[class='CNPJ']").value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
-          });
+
+window.addEventListener('load', atualizaPainel())
