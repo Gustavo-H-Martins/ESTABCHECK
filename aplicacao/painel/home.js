@@ -6,7 +6,7 @@ async function atualizaPainel() {
   var cnae = Option[Select].value;
   //alert(cnae)
   try {
-    const response = await fetch(`http://localhost:8000/estabelecimentos/get/uf=${uf}/numero_cnae=${cnae}`);
+    const response = await fetch(`https://estabelecimentoscnpj.gustavo-h-marti.repl.co/estabelecimentos/get/uf=${uf}/numero_cnae=${cnae}`);
     const dados = await response.json();
     let data = dados.slice(0,200)
     // Aqui você pode manipular os dados como quiser

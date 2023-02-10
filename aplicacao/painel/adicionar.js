@@ -15,7 +15,7 @@ console.log(`Dados incluídos
 ${JSON.stringify(formData)}`)
 alert(`Dados de ${formElements[0].value} incluídos com sucesso!`)
 const request = new XMLHttpRequest();
-request.open("POST", "http://localhost:8000/estabelecimentos/insert/cnpj", true);
+request.open("POST", "https://estabelecimentoscnpj.gustavo-h-marti.repl.co/estabelecimentos/insert/cnpj", true);
 request.setRequestHeader("Content-Type", "application/json");
 request.send(JSON.stringify(formData));
 });
@@ -55,7 +55,7 @@ fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj}`)
 const inputCnpj = document.querySelector("input[name='cnpj']");
 inputCnpj.addEventListener("change", (event) => {
 const cnpj = event.target.value;
-fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
+fetch(`https://estabelecimentoscnpj.gustavo-h-marti.repl.co/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
 .then((response) =>
     response.json())
 .then((data) => {
@@ -68,7 +68,7 @@ fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g,
     document.querySelector(`input[name='${nome}']`).value = value || "";
     }
 });
-fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
+fetch(`https://estabelecimentoscnpj.gustavo-h-marti.repl.co/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
 .then((response) => {
 if (response.status === 200) {
     swal({

@@ -14,7 +14,7 @@ document.getElementById("update-cnpj-form").addEventListener("submit", function 
     ${JSON.stringify(formData)}`)
     alert(`Dados de ${formElements[0].value} atualizados com sucesso!`)
     const request = new XMLHttpRequest();
-    request.open("PUT", `http://localhost:8000/estabelecimentos/update/cnpj=${formElements[0].value.replace(/[^0-9]/g, '')}`, true);
+    request.open("PUT", `https://estabelecimentoscnpj.gustavo-h-marti.repl.co/estabelecimentos/update/cnpj=${formElements[0].value.replace(/[^0-9]/g, '')}`, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.onload = () => {
         if (request.status === 200) {
@@ -29,7 +29,7 @@ document.getElementById("update-cnpj-form").addEventListener("submit", function 
     const inputCnpj = document.querySelector("input[name='cnpj']");
     inputCnpj.addEventListener("change", (event) => {
     const cnpj = event.target.value;
-    fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
+    fetch(`https://estabelecimentoscnpj.gustavo-h-marti.repl.co/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
     .then((response) =>
         response.json())
     .then((data) => {
@@ -42,7 +42,7 @@ document.getElementById("update-cnpj-form").addEventListener("submit", function 
         document.querySelector(`input[name='${nome}']`).value = value || "";
         }
     });
-    fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
+    fetch(`https://estabelecimentoscnpj.gustavo-h-marti.repl.co/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
     .then((response) => {
     if (response.status === 200) {
     } else {
