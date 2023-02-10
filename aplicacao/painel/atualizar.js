@@ -6,19 +6,21 @@ document.getElementById("update-cnpj-form").addEventListener("submit", function 
     for (let i = 0; i < formElements.length; i++) {
         const input = formElements[i];
         if (input.name) {
-        alert(input.name);
+        //alert(input.name);
         formData[input.name] = input.value;
         }
     }
-    alert(JSON.stringify(formData))
+    console.log(`Dados atualizados
+    ${JSON.stringify(formData)}`)
+    alert(`Dados de ${formElements[0].value} atualizados com sucesso!`)
     const request = new XMLHttpRequest();
-    request.open("PUT", `http://localhost:8000/estabelecimentos/update/cnpj=${cnpj.replace(/[^0-9]/g, '')}`, true);
+    request.open("PUT", `http://localhost:8000/estabelecimentos/update/cnpj=${formElements[0].value.replace(/[^0-9]/g, '')}`, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.onload = () => {
         if (request.status === 200) {
             console.log(`Dados do estabelecimento ${formElements[1].value} atualizado com sucesso`);
         } else { 
-            console.error(`Erro ao atualizar dados de ${cnpj}`);
+            console.error(`Erro ao atualizar dados de ${formElements[0].value}`);
         }
     };
     request.send(JSON.stringify(formData));
