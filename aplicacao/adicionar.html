@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <link rel="shortcut icon" href="painel/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="painel/styles.css"/>
     <meta charset="UTF-8">
     <title>CRUD interface</title>
   </head>
   <body>
+    <header>
+      <div>
+        <a href="https://abrasel.com.br/">
+          <img class="Logo" src="painel/abrasel_logo.jpg" alt="Logo Abrasel">
+        </a>
+      </div>
+    </header>
     <fieldset class="field_add">
       <div class="div_add">
         <!-- Formulário para adicionar novo CNPJ -->
@@ -20,9 +27,9 @@
             <label for="rua">Rua:</label>
             <input type="text" id="rua" name="rua" required><br>
             <label for="numero">Número:</label>
-            <input type="text" id="numero" name="numero" required><br>
+            <input type="text" id="numero" name="numero"><br>
             <label for="complemento">Complemento:</label>
-            <input type="text" id="complemento" name="complemento" required><br>
+            <input type="text" id="complemento" name="complemento"><br>
             <label for="bairro">Bairro:</label>
             <input type="text" id="bairro" name="bairro" required><br>
             <label for="cidade">Cidade:</label>
@@ -30,29 +37,29 @@
             <label for="estado">Estado:</label>
             <input type="text" id="estado" name="estado" required><br>
             <label for="cep">CEP:</label>
-            <input type="text" id="cep" name="cep" required><br>
+            <input type="text" id="cep" name="cep"><br>
             <label for="latitude">Latitude:</label>
-            <input type="text" id="latitude" name="latitude" required><br>
+            <input type="text" id="latitude" name="latitude"><br>
             <label for="longitude">Longitude:</label>
-            <input type="text" id="longitude" name="longitude" required><br> 
+            <input type="text" id="longitude" name="longitude"><br> 
             <label for="telefone">Telefone 1:</label>
             <input type="text" id="telefone1" name="telefone1" required><br>            
             <label for="site">Site:</label>
-            <input type="text" id="site" name="site" required><br>            
+            <input type="text" id="site" name="site"><br>            
             <label for="cnae">CNAE Descrição:</label>
-            <input type="text" id="cnae-descricao" name="cnae_descricao" required><br>
+            <input type="text" id="cnae-descricao" name="cnae_descricao"><br>
             <label for="funcionamento">Horário de funcionamento:</label>
-            <input type="text" id="horario-funcionamento" name="horario_funcionamento" required><br>
+            <input type="text" id="horario-funcionamento" name="horario_funcionamento"><br>
             <label for="instagram">Instagram:</label>
-            <input type="text" id="instagram" name="instagram" required><br>
+            <input type="text" id="instagram" name="instagram"><br>
             <label for="facebook">Facebook:</label>
-            <input type="text" id="facebook" name="facebook" required><br>
+            <input type="text" id="facebook" name="facebook"><br>
             <label for="servicos">Opções de serviço:</label>
-            <input type="text" id="opcoes-de-servico" name="opcoes_de_servico" required><br>    
+            <input type="text" id="opcoes-de-servico" name="opcoes_de_servico"><br>    
             <button class="button-enviar" type="submit">Enviar</button>        
           </form>
       </div>
     </fieldset>
-    <script type="module" src="adicionar.js"></script>
+    <script type="module" src="painel/adicionar.js"></script>
   </body>
 </html>
