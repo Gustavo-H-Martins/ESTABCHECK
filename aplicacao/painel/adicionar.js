@@ -6,11 +6,14 @@ const formElements = document.getElementById("add-cnpj-form").elements;
 for (let i = 0; i < formElements.length; i++) {
     const input = formElements[i];
     if (input.name) {
-    alert(input.name);
+    //alert(input.name);
     formData[input.name] = input.value;
     }
 }
-alert(JSON.stringify(formData))
+
+console.log(`Dados incluídos
+${JSON.stringify(formData)}`)
+alert(`Dados de ${cnpj} incluídos com sucesso!`)
 const request = new XMLHttpRequest();
 request.open("POST", "http://localhost:8000/estabelecimentos/insert/cnpj", true);
 request.setRequestHeader("Content-Type", "application/json");
