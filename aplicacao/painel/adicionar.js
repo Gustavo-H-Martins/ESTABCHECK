@@ -13,7 +13,7 @@ for (let i = 0; i < formElements.length; i++) {
 
 console.log(`Dados incluídos
 ${JSON.stringify(formData)}`)
-alert(`Dados de ${cnpj} incluídos com sucesso!`)
+alert(`Dados de ${formElements[0].value} incluídos com sucesso!`)
 const request = new XMLHttpRequest();
 request.open("POST", "http://localhost:8000/estabelecimentos/insert/cnpj", true);
 request.setRequestHeader("Content-Type", "application/json");
