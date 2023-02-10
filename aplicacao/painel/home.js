@@ -1,7 +1,12 @@
 // Adiciona dados na tabela
 async function atualizaPainel() {
+  var uf = document.getElementById('uf').value;
+  var Select = document.getElementById("CNAE").selectedIndex;
+  var Option = document.getElementById("CNAE").options;
+  var cnae = Option[Select].value;
+  //alert(cnae)
   try {
-    const response = await fetch('http://localhost:8000/estabelecimentos/get/all');
+    const response = await fetch(`http://localhost:8000/estabelecimentos/get/uf=${uf}/numero_cnae=${cnae}`);
     const dados = await response.json();
     let data = dados.slice(0,200)
     // Aqui você pode manipular os dados como quiser

@@ -60,7 +60,7 @@ button{
     color: #ffff;
 }
 
-button {
+button, .params-api {
     color: #FFF;
     background-color: #f7941d;  
     height: 30px;

@@ -94,6 +94,35 @@ app.get('/estabelecimentos/get/uf=:uf', (req, res) =>{
   });
 });
 
+// Obter dados pelo cnae e estado
+app.get('/estabelecimentos/get/uf=:uf/numero_cnae=:numero_cnae', (req, res) => {
+  var uf = req.params.uf.toUpperCase();
+  var numero_cnae = parseInt(req.params.numero_cnae);
+  //console.log(numero_cnae)
+  //console.log(typeof numero_cnae)
+  if (numero_cnae === 5611201) {
+    cnae_descricao = 'Restaurantes e similares';
+  } else if (numero_cnae === 5611203) {
+    cnae_descricao = 'Lanchonetes casas de chá de sucos e similares';
+  } else if (numero_cnae === 5611204){
+    cnae_descricao = 'Bares e outros estabelecimentos especializados em servir bebidas sem entretenimento';
+  } else if (numero_cnae === 5611205) {
+    cnae_descricao = 'Bares e outros estabelecimentos especializados em servir bebidas com entretenimento';
+  } else if (numero_cnae === 5612100) {
+    cnae_descricao = 'Serviços ambulantes de alimentação';
+  }
+  //console.log(cnae_descricao)
+  db.all(`SELECT * FROM estabelecimentos WHERE ESTADO = $1 AND CNAE_DESCRICAO = $2`, [uf, cnae_descricao], (err, rows) =>{
+    if(err) {
+      res.status(500).json({error: err.message});
+      return;
+    }
+    console.log(`Retornando ${rows.length} dados do ${uf} cnae ${cnae_descricao, numero_cnae}`)
+    res.json(
+      rows
+    );
+  });
+});
 
 /*
   MÉTODOS POST
@@ -183,6 +212,8 @@ message: `CNPJ ${cnpj} deletado com sucesso`
 
 // Pega o ip do servidor
 var ip = require("ip");
+const { Console } = require('console');
+const { type } = require('os');
 //console.dir ( `O Servidor tem o seguinte IP Público Local ${ip.address()} `);
 
 // Inicia o servidor
