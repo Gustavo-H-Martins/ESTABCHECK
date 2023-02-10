@@ -46,7 +46,18 @@ document.getElementById("update-cnpj-form").addEventListener("submit", function 
     .then((response) => {
     if (response.status === 200) {
     } else {
-        alert(`CNPJ: ${cnpj} não encontrado!`)
+        swal({
+            title: `CNPJ: ${cnpj} não encontrado!`,
+            text: "Clique no botão para ser redirecionado para página de inclusão!",
+            icon: "warning",
+            buttons: true,
+          }).then(function(result) {
+            if (result) {
+              window.location.href='./adicionar.html';
+            } else {
+              console.log("Operação cancelada ");
+            }
+          });
     }
     });
     });
@@ -55,3 +66,5 @@ document.getElementById("update-cnpj-form").addEventListener("submit", function 
           form_cnpj.addEventListener("change", (event) => {
               document.querySelector("input[name='cnpj']").value = document.querySelector("input[name='cnpj']").value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
               });
+
+            

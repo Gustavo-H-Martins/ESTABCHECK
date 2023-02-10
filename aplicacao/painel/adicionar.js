@@ -71,8 +71,20 @@ fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g,
 fetch(`http://localhost:8000/estabelecimentos/get/cnpj=${cnpj.replace(/[^0-9]/g, '')}`)
 .then((response) => {
 if (response.status === 200) {
+    swal({
+        title: `CNPJ: ${cnpj} já existe na base!`,
+        text: "Clique no botão para ser redirecionado para página de alteração!",
+        icon: "warning",
+        buttons: true,
+      }).then(function(result) {
+        if (result) {
+          window.location.href='./editar.html';
+        } else {
+          console.log("Operação cancelada ");
+        }
+      });
 } else {
-    alert(`CNPJ: ${cnpj} não encontrado!`)
+    console.log(`CNPJ: ${cnpj} não encontrado!`)
 }
 });
 });
