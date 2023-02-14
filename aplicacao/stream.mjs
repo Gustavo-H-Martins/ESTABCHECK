@@ -1,12 +1,12 @@
 import { createServer, request } from 'http'
 import { createReadStream } from 'fs'
 import { setTimeout } from 'timers/promises'
-import { Transform, Readable } from 'stream'
+import { Transform, Readable, Writable } from 'stream'
 import { TransformStream, WritableStream } from 'stream/web'
 import express, { response } from 'express'
 import csvtojson from 'csvtojson'
 import fs from 'node:fs'
-import path from 'path'
+import path, { delimiter } from 'path'
 
 const app = express()
 const PORT = 3000
@@ -75,19 +75,56 @@ app.get('/teste', async (request, response) => {
 
     const csvFiles = files.filter(file => path.extname(file) === '.csv');
 
+    let i = 0;
+    const processNextFile = () => {
+      if (i >= csvFiles.length) {
+        response.end();
+        return;
+      }
+      const file = csvFiles[i];
+      const filePath = path.join(folderPath, file);
+      const csvFileStream = createReadStream(filePath);
+
+      csvFileStream
+        .pipe(csvtojson({delimiter: ';'}))
+        .pipe(
+          new Transform({
+              transform(chunk, encoding, callback) {
+                const dados = JSON.parse(chunk.toString());
+                callback(null, JSON.stringify(dados).concat('\n'));
+              },
+          })
+        )
+        .pipe(
+          new Writable({
+            write(chunk, encoding, callback) {
+              response.write(chunk);
+              callback();
+              items++;
+            },
+            final(callback){
+              i++;
+              processNextFile();
+              callback();
+            }
+          })
+        );
+    };
+    processNextFile();
+  });
+});
+    /* processo anterior
     let csvFileStreams = csvFiles.map(file => {
       const filePath = path.join(folderPath, file);
-      return fs.createReadStream(filePath);
+      return createReadStream(filePath);
     });
-
     Readable.toWeb(Readable.from(csvFileStreams))
-    .pipeThrough(Transform.toWeb(csvtojson()))
+    .pipeThrough(Transform.toWeb(csvtojson({delimiter: ';'})))
     .pipeThrough(
       new TransformStream({
         transform(chunk, controller) {
-          const data = JSON.parse(Buffer.from(chunk))
-
-          controller.enqueue(JSON.stringify(chunk).concat('\n'))
+          const dados = JSON.parse(Buffer.from(chunk))
+          controller.enqueue(JSON.stringify(dados).concat('\n'))
           items++
         },
       })
@@ -95,7 +132,7 @@ app.get('/teste', async (request, response) => {
     .pipeTo(
       new WritableStream({
         async write(chunk) {
-          await setTimeout(200)
+          //await setTimeout(200)
           response.write(chunk)
         },
         close() {
@@ -105,7 +142,7 @@ app.get('/teste', async (request, response) => {
     )
   });
 });
-
+    */
 createServer(app)
   .listen(PORT)
   .on('listening', _ => console.log('server running at ', PORT))
