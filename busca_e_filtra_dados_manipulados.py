@@ -5,11 +5,11 @@ import os
 import re
 import pandas as pd
 from datetime import datetime
-from backup_limpeza import backup_limpeza_simples
+from utilitarios.backup_limpeza import backup_limpeza_simples
 
 datazip = f'{datetime.now().year}-{datetime.now().month-1}'
 # realiza backup dos dados antigos
-base_csv_estabelecimentos = r'../base_csv_estabelecimentos/'
+base_csv_estabelecimentos = r'./base_csv_estabelecimentos/'
 all_files_estabelecimentos = list(filter(lambda x: '.csv' in x, os.listdir(base_csv_estabelecimentos)))
 if len(all_files_estabelecimentos) >= 1:
     backup_limpeza_simples(pasta=base_csv_estabelecimentos, nome_zipado=f'base_csv_estabelecimentos{datazip}.zip',extensao='.csv')
@@ -54,6 +54,6 @@ for file in all_files:
     dados = dados[[
         'CNPJ_BASE', 'CNPJ_ORDEM', 'CNPJ_DV', 'NOME_FANTASIA', 'CNAE_PRINCIPAL','CNAE_DESCRICAO',
         'TIPO_LOGRADOURO', 'LOGRADOURO', 'NUMERO',
-       'COMPLEMENTO', 'BAIRRO', 'CEP', 'UF', 'MUNICIPIO', 'TELEFONE1']]
+       'COMPLEMENTO', 'BAIRRO', 'CEP', 'UF', 'MUNICIPIO', 'TELEFONE1', 'SITUACAO_CADASTRAL', 'DATA_SITUACAO_CADASTRAL']]
     c +=1
-    dados.to_csv(f"../base_csv_estabelecimentos/{file}", mode='w',index=False, sep=';')
+    dados.to_csv(f"./base_csv_estabelecimentos/{file}", mode='w',index=False, sep=';')

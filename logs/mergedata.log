@@ -13,3 +13,16 @@
 2023-02-01 09:58:12,618 - INFO - Concluído processo de extração de 385468 dados do CNAE de Restaurantes e similares.csv
 2023-02-01 09:58:12,621 - INFO - Lendo arquivo Serviços ambulantes de alimentação.csv
 2023-02-01 10:07:03,076 - INFO - Concluído processo de extração de 176693 dados do CNAE de Serviços ambulantes de alimentação.csv
+2023-02-27 12:08:46,458 - INFO - Lendo arquivo Bares e outros estabelecimentos especializados em servir bebidas com entretenimento.csv
+2023-02-27 12:11:54,117 - INFO - Concluído processo de extração de 77459 dados do CNAE de Bares e outros estabelecimentos especializados em servir bebidas com entretenimento.csv
+2023-02-27 12:11:54,120 - INFO - Lendo arquivo Bares e outros estabelecimentos especializados em servir bebidas sem entretenimento.csv
+2023-02-27 12:21:47,516 - INFO - Lendo arquivo Bares e outros estabelecimentos especializados em servir bebidas com entretenimento.csv
+2023-02-27 12:24:42,407 - INFO - Concluído processo de extração de 77459 dados do CNAE de Bares e outros estabelecimentos especializados em servir bebidas com entretenimento.csv
+2023-02-27 12:24:42,407 - INFO - Lendo arquivo Bares e outros estabelecimentos especializados em servir bebidas sem entretenimento.csv
+2023-02-27 12:27:53,921 - INFO - Concluído processo de extração de 239228 dados do CNAE de Bares e outros estabelecimentos especializados em servir bebidas sem entretenimento.csv
+2023-02-27 12:27:53,921 - INFO - Lendo arquivo Lanchonetes casas de chá de sucos e similares.csv
+2023-02-27 12:32:18,179 - INFO - Concluído processo de extração de 723882 dados do CNAE de Lanchonetes casas de chá de sucos e similares.csv
+2023-02-27 12:32:18,179 - INFO - Lendo arquivo Restaurantes e similares.csv
+2023-02-27 12:36:11,314 - INFO - Concluído processo de extração de 584044 dados do CNAE de Restaurantes e similares.csv
+2023-02-27 12:36:11,314 - INFO - Lendo arquivo Serviços ambulantes de alimentação.csv
+2023-02-27 12:39:30,485 - INFO - Concluído processo de extração de 259675 dados do CNAE de Serviços ambulantes de alimentação.csv
