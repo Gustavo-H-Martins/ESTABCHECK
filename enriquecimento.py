@@ -5,11 +5,28 @@ import re
 import os
 import translators.server as tss
 import logging
+from utilitarios.backup_limpeza import backup_limpeza_simples
+from datetime import datetime
 
 # gerando log
 logging.basicConfig(level=logging.INFO, filename="./logs/enriquecimento.log", encoding='utf-8', format="%(asctime)s - %(levelname)s - %(message)s")
 # Ceps
 ceps = pd.read_csv('CEP\LISTA_CEP_LATITUDE_LONGITUDE.csv', sep=';')
+
+# Definindo data atual e gerando o backup
+datazip = f'{datetime.now().year}-{datetime.now().month-1}'
+
+# verificando e gerando o backup dos dados. 
+br_base = r'br_base/'
+all_files_br_base = list(filter(lambda x: '.csv' in x, os.listdir(br_base)))
+if len(all_files_br_base) >= 1:
+    backup_limpeza_simples(diretorio_origem=br_base, nome_zipado=f"backup_br_base_{datazip}.zip", extensao='.csv', diretorio_destino=f"{br_base}backup/")
+
+en_base = r'en_base/'
+all_files_br_base = list(filter(lambda x: '.csv' in x, os.listdir(en_base)))
+if len(all_files_br_base) >= 1:
+    backup_limpeza_simples(diretorio_origem=en_base, nome_zipado=f"backup_en_base_{datazip}.zip", extensao='.csv', diretorio_destino=f"{en_base}backup/")
+
 
 def traduzir(texto):
     """ Traduz um texto informado do Português para o Inglês"""
@@ -37,7 +54,7 @@ all_files = list(filter(lambda x: '.csv' in x, os.listdir(diretorio)))
 for file in all_files:
     # Itera sobre todos os arquivos CSV no repositório
     dados = pd.read_csv(f"{diretorio}{file}", sep=';', dtype='object')
-    
+    dados['NOME_FANTASIA'].replace('--empty--','', regex=True, inplace=True)
     dados = pd.merge(dados,ceps,how='left', on='CEP')
     dados['SITE'] = "www." + dados['NOME_FANTASIA'].str.lower().replace(" ", "", regex=True) + ".com.br"
     dados['FACEBOOK'] = "https://pt-br.facebook.com/" + dados['NOME_FANTASIA'].str.lower().replace(" ","",regex=True)

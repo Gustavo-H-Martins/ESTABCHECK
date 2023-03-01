@@ -2,14 +2,25 @@ import pandas as pd
 import sqlite3
 import os
 import time
-import datetime
+from datetime import datetime
 import logging
+from utilitarios.backup_limpeza import backup_simples
 
 # gerando log
 logging.basicConfig(level=logging.INFO, filename="./logs/migracao.log", encoding='utf-8', format="%(asctime)s - %(levelname)s - %(message)s")
 
+# Definindo data atual e gerando o backup
+datazip = f'{datetime.now().year}-{datetime.now().month}'
 
-agora = datetime.datetime.now()
+# verificando e gerando o backup dos dados. 
+database = r'./database/'
+all_files_database = list(filter(lambda x: '.db' in x, os.listdir(database)))
+if len(all_files_database) >= 1:
+    backup_simples(diretorio_origem=database, nome_zipado=f"backup_database_{datazip}.zip", extensao='.db', diretorio_destino=f"{database}backup/")
+
+
+
+agora = datetime.now()
 print(f"Início do processo: {agora.date()} às {agora.time()}")
 logging.info(f"Início do processo: {agora.date()} às {agora.time()}")
 # Cria uma conexão com os SQLites
@@ -55,7 +66,7 @@ en_conn.execute("VACUUM")
 # Fecha a conexão com o banco de dados
 en_conn.close()
 
-agora = datetime.datetime.now()
+agora = datetime.now()
 tempo_execucao = time.process_time()
 print(f"Fim do processo: {agora.date()} às {agora.time()}  tempo de execução {tempo_execucao}!")
 logging.info(f"Fim do processo: {agora.date()} às {agora.time()}  tempo de execução {tempo_execucao}!")
