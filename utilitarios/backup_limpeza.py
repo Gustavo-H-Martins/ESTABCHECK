@@ -140,3 +140,4 @@ def backup_simples(diretorio_origem:str = os.getcwd(),
                 caminho_arquivo = os.path.join(diretorio, arquivo)
                 # Adiciona o arquivo ao arquivo zip
                 zipf.write(caminho_arquivo, arquivo)
+    os.replace(f'{diretorio}{nome_zip}',f'{diretorio_destino}{nome_zip}')

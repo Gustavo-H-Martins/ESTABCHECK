@@ -1,3 +1,5 @@
-2023-02-01 12:10:55,598 - INFO - Início do processo: 2023-02-01 às 12:10:55.598666
-2023-02-01 12:12:23,891 - INFO - Fim do processo: 2023-02-01 às 12:12:23.891879  tempo de execução 43.46875!
-2023-03-03 13:25:56,852 - INFO - Início do processo: 2023-03-03 às 13:25:56.852812
+2023-03-03 16:35:33,217 - INFO - Info message
+2023-03-03 16:35:33,218 - WARNING - Warning message
+2023-03-03 16:35:33,218 - ERROR - Error message
+2023-03-03 16:35:34,037 - CRITICAL - Critical message
+2023-03-03 16:37:14,738 - INFO - Início do processo: 2023-03-03 às 16:37:11.421956
