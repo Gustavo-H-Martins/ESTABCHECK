@@ -1,5 +1,14 @@
-2023-03-03 16:35:33,217 - INFO - Info message
-2023-03-03 16:35:33,218 - WARNING - Warning message
-2023-03-03 16:35:33,218 - ERROR - Error message
-2023-03-03 16:35:34,037 - CRITICAL - Critical message
-2023-03-03 16:37:14,738 - INFO - Início do processo: 2023-03-03 às 16:37:11.421956
+2023-03-06 10:46:28,502 - INFO - Início do processo: 2023-03-06 às 10:45:54.452573
+2023-03-06 10:52:29,332 - INFO - Início do processo: 2023-03-06 às 10:51:24.862830
+2023-03-06 11:05:10,731 - INFO - Início do processo: 2023-03-06 às 11:04:16.225975
+2023-03-06 12:21:10,339 - INFO - Início do processo: 2023-03-06 às 12:20:50.436317
+2023-03-06 12:24:58,647 - INFO - Início do processo: 2023-03-06 às 12:24:32.608331
+2023-03-06 12:26:19,724 - INFO - Início do processo: 2023-03-06 às 12:26:00.050414
+2023-03-06 12:27:21,719 - INFO - Início do processo: 2023-03-06 às 12:27:01.881779
+2023-03-06 12:33:24,153 - INFO - Início do processo: 2023-03-06 às 12:32:59.955467
+2023-03-06 12:37:12,193 - INFO - Início do processo: 2023-03-06 às 12:36:52.138340
+2023-03-06 14:37:18,146 - INFO - Início do processo: 2023-03-06 às 14:36:47.491267
+2023-03-06 14:37:50,515 - ERROR - Erro ao executar a query: database is locked
+2023-03-06 16:53:19,959 - INFO - Início do processo: 2023-03-06 às 16:53:19.957868
+2023-03-06 17:00:09,636 - INFO - Início do processo: 2023-03-06 às 16:57:56.503441
+2023-03-06 17:01:15,477 - INFO - Fim do processo: 2023-03-06 às 17:01:15.477903  tempo de execução 89.453125!
