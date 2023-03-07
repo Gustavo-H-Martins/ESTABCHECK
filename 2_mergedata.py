@@ -1,3 +1,7 @@
+"""
+    # ESSE RODA SEGUNDO 
+"""
+
 # Libs
 import pandas as pd
 import os
@@ -14,7 +18,8 @@ logging.basicConfig(level=logging.INFO, filename="./logs/mergedata.log", encodin
 
 
 # Definindo data atual e gerando o backup
-datazip = f'{datetime.now().year}-{datetime.now().month-1}'
+agora = datetime.now()
+datazip = agora.strftime("%Y-%m-%d %H_%M_%S")
 
 # verificando e gerando o backup dos dados. 
 merge_base = r'merge_base/'

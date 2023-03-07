@@ -1,3 +1,9 @@
+"""
+    # ESTE RODA PRIMEIRO
+"""
+
+
+
 # ler todos os arquivos csv do diretório e guardar em um objeto
 import numpy as np
 import time
@@ -7,7 +13,10 @@ import pandas as pd
 from datetime import datetime
 from utilitarios.backup_limpeza import backup_limpeza_simples
 
-datazip = f'{datetime.now().year}-{datetime.now().month-1}'
+# Definindo data atual e gerando o backup
+agora = datetime.now()
+datazip = agora.strftime("%Y-%m-%d %H_%M_%S")
+
 # realiza backup dos dados antigos
 base_csv_estabelecimentos = r'./base_csv_estabelecimentos/'
 all_files_estabelecimentos = list(filter(lambda x: '.csv' in x, os.listdir(base_csv_estabelecimentos)))

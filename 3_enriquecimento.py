@@ -1,3 +1,7 @@
+"""
+    # ESSE RODA TERCEIRO
+"""
+
 # libs
 import pandas as pd
 import json
@@ -14,7 +18,8 @@ logging.basicConfig(level=logging.INFO, filename="./logs/enriquecimento.log", en
 ceps = pd.read_csv('CEP\LISTA_CEP_LATITUDE_LONGITUDE.csv', sep=';')
 
 # Definindo data atual e gerando o backup
-datazip = f'{datetime.now().year}-{datetime.now().month-1}'
+agora = datetime.now()
+datazip = agora.strftime("%Y-%m-%d %H_%M_%S")
 
 # verificando e gerando o backup dos dados. 
 br_base = r'br_base/'
@@ -85,6 +90,7 @@ for file in all_files:
     # Tratando os dados para disposição
     data = pd.merge(data, comparador, on='CATEGORY_(CNAE)')
     data['CATEGORY_(CNAE)'] = data['CNAE_TRADUCAO']
+    dados.drop(columns=['CNAE_TRADUCAO'], inplace=True)
     data = data[['EIN (CNPJ)', 'CORPORATE_NAME', 'TRADING NAME', 'STREET', 'ADDRESS_NUMBER', 
                  'ADDRESS_COMPLEMENT', 'DISTRICT', 'CITY', 'STATE', 'ZIP_CODE', 'LATITUDE', 
                  'LONGITUDE', 'TELEFONE1', 'SITE', 'CATEGORY_(CNAE)', 'OPENING_HOURS', 'INSTAGRAM', 'FACEBOOK', 
