@@ -102,7 +102,7 @@ def backup_limpeza_simples(diretorio_origem:str = os.getcwd(),
     os.replace(f'{diretorio}{nome_zip}',f'{diretorio_destino}{nome_zip}')
 
 def backup_simples(diretorio_origem:str = os.getcwd(), 
-    nome_zipado:str = (f'backup_{str(datetime.now()).replace(":","-")}.zip'),
+    nome_zipado:str = (f'backup_{datetime.now().strftime("%Y-%m-%d %H_%M_%S")}.zip'),
     extensao:str = '.csv', diretorio_destino:str =  os.getcwd()):
     """
     - Define o diretório de trabalho

@@ -14,7 +14,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # gerando log
-logging.basicConfig(level=logging.INFO, filename="./logs/mergedata.log", encoding='utf-8', format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(level=logging.DEBUG, filename="./logs/mergedata.log", encoding='utf-8', format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 # Definindo data atual e gerando o backup

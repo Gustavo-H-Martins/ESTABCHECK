@@ -90,7 +90,6 @@ for file in all_files:
     # Tratando os dados para disposição
     data = pd.merge(data, comparador, on='CATEGORY_(CNAE)')
     data['CATEGORY_(CNAE)'] = data['CNAE_TRADUCAO']
-    dados.drop(columns=['CNAE_TRADUCAO'], inplace=True)
     data = data[['EIN (CNPJ)', 'CORPORATE_NAME', 'TRADING NAME', 'STREET', 'ADDRESS_NUMBER', 
                  'ADDRESS_COMPLEMENT', 'DISTRICT', 'CITY', 'STATE', 'ZIP_CODE', 'LATITUDE', 
                  'LONGITUDE', 'TELEFONE1', 'SITE', 'CATEGORY_(CNAE)', 'OPENING_HOURS', 'INSTAGRAM', 'FACEBOOK', 
