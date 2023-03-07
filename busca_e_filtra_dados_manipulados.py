@@ -33,27 +33,14 @@ dtypes = {'CNPJ_BASE': 'category',
  'CNPJ_ORDEM': 'category',
  'CNPJ_DV': 'category'}
 
-# Define CNAES
-CNAES = {5611201:'Restaurantes e similares',
-        5611203:'Lanchonetes casas de chá de sucos e similares',
-        5611204:'Bares e outros estabelecimentos especializados em servir bebidas sem entretenimento',
-        5611205:'Bares e outros estabelecimentos especializados em servir bebidas com entretenimento',
-        5612100: 'Serviços ambulantes de alimentação'}
-lista_cnae = []
-lista_descricao = []
-for cnae in CNAES.keys():
-    lista_cnae.append(cnae)
-for descricao in CNAES.values():
-    lista_descricao.append(descricao)
-
 # processa os dados
-c = 0
+
 for file in all_files:
     dados =pd.read_csv(f'{diretorio}{file}', names=ESTABELE, dtype=dtypes, sep=';')
-    dados['CNAE_DESCRICAO'] = lista_descricao[c]
+    descricao_cnae = re.sub('.csv', '', file)
+    dados['CNAE_DESCRICAO'] = descricao_cnae.upper()
     dados = dados[[
         'CNPJ_BASE', 'CNPJ_ORDEM', 'CNPJ_DV', 'NOME_FANTASIA', 'CNAE_PRINCIPAL','CNAE_DESCRICAO',
         'TIPO_LOGRADOURO', 'LOGRADOURO', 'NUMERO',
        'COMPLEMENTO', 'BAIRRO', 'CEP', 'UF', 'MUNICIPIO', 'TELEFONE1', 'SITUACAO_CADASTRAL', 'DATA_SITUACAO_CADASTRAL']]
-    c +=1
     dados.to_csv(f"./base_csv_estabelecimentos/{file}", mode='w',index=False, sep=';')
