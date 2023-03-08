@@ -101,15 +101,15 @@ app.get('/estabelecimentos/get/uf=:uf/numero_cnae=:numero_cnae', (req, res) => {
   //console.log(numero_cnae)
   //console.log(typeof numero_cnae)
   if (numero_cnae === 5611201) {
-    cnae_descricao = 'Restaurantes e similares';
+    cnae_descricao = 'RESTAURANTES E SIMILARES';
   } else if (numero_cnae === 5611203) {
-    cnae_descricao = 'Lanchonetes casas de chá de sucos e similares';
+    cnae_descricao = 'LANCHONETES CASAS DE CHÁ DE SUCOS E SIMILARES';
   } else if (numero_cnae === 5611204){
-    cnae_descricao = 'Bares e outros estabelecimentos especializados em servir bebidas sem entretenimento';
+    cnae_descricao = 'BARES E OUTROS ESTABELECIMENTOS ESPECIALIZADOS EM SERVIR BEBIDAS SEM ENTRETENIMENTO';
   } else if (numero_cnae === 5611205) {
-    cnae_descricao = 'Bares e outros estabelecimentos especializados em servir bebidas com entretenimento';
+    cnae_descricao = 'BARES E OUTROS ESTABELECIMENTOS ESPECIALIZADOS EM SERVIR BEBIDAS COM ENTRETENIMENTO';
   } else if (numero_cnae === 5612100) {
-    cnae_descricao = 'Serviços ambulantes de alimentação';
+    cnae_descricao = 'SERVIÇOS AMBULANTES DE ALIMENTAÇÃO';
   }
   //console.log(cnae_descricao)
   db.all(`SELECT * FROM estabelecimentos WHERE ESTADO = $1 AND CNAE_DESCRICAO = $2`, [uf, cnae_descricao], (err, rows) =>{

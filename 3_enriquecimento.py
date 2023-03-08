@@ -88,7 +88,7 @@ for file in all_files:
     #data['CATEGORY_(CNAE)'] = data['CATEGORY_(CNAE)'].str.replace(f"{data['CATEGORY_(CNAE)'].str}", f"{traduzir(data['CATEGORY_(CNAE)'].str)}", regex=True)
     
     # Tratando os dados para disposição
-    data = pd.merge(data, comparador, on='CATEGORY_(CNAE)')
+    data = pd.merge(data, comparador, on='CATEGORY_(CNAE)', how='left')
     data['CATEGORY_(CNAE)'] = data['CNAE_TRADUCAO']
     data = data[['EIN (CNPJ)', 'CORPORATE_NAME', 'TRADING NAME', 'STREET', 'ADDRESS_NUMBER', 
                  'ADDRESS_COMPLEMENT', 'DISTRICT', 'CITY', 'STATE', 'ZIP_CODE', 'LATITUDE', 
