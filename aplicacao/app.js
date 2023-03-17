@@ -55,6 +55,7 @@ app.get('/estabelecimentos/get/all', (req, res) => {
       res.status(500).json({ error: err.message });
       return;
     }
+    console.log(`Retornando ${rows.length} dados`)
     res.json(
       rows
     );
