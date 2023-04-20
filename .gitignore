@@ -1,9 +1,7 @@
 # ignore todos os csvs e json
-*.csv
-*.json
+/base_csv_estabelecimentos
 *.zip
 *.rar
-*.db
 *.xlsx
 *.pyc
 *.gzip

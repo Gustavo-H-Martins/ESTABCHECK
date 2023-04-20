@@ -17,13 +17,17 @@ from utilitarios.backup_limpeza import backup_limpeza_simples
 agora = datetime.now()
 datazip = agora.strftime("%Y-%m-%d %H_%M_%S")
 
+# diretório atual
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
 # realiza backup dos dados antigos
-base_csv_estabelecimentos = r'./base_csv_estabelecimentos/'
+base_csv_estabelecimentos = current_dir + r'/base_csv_estabelecimentos/'
 all_files_estabelecimentos = list(filter(lambda x: '.csv' in x, os.listdir(base_csv_estabelecimentos)))
 if len(all_files_estabelecimentos) >= 1:
     backup_limpeza_simples(pasta=base_csv_estabelecimentos, nome_zipado=f'base_csv_estabelecimentos{datazip}.zip',extensao='.csv')
 #diretorio = r'Bases\Base_atualizada/'
-diretorio = r'C:\Users\ABRASEL NACIONAL\Documents\CNPJ_PROGRAMATICA\Manipulacao_arquivos\Manipulacao_Arquivos_Python\Bases/'
+diretorio = current_dir.replace("ESTABCHECK", r"ETL_CNPJ/Bases/" )
+
 all_files = list(filter(lambda x: '.csv' in x, os.listdir(diretorio)))
 
 #Warnings: Possui uma série de funções e comandos para tratamento de mensagens de avisos e alertas do Python
@@ -45,11 +49,13 @@ dtypes = {'CNPJ_BASE': 'category',
 # processa os dados
 
 for file in all_files:
-    dados =pd.read_csv(f'{diretorio}{file}', names=ESTABELE, dtype=dtypes, sep=';')
+    dados =pd.read_csv(f'{diretorio}{file}', names=ESTABELE, dtype=dtypes, index_col=0)
     descricao_cnae = re.sub('.csv', '', file)
     dados['CNAE_DESCRICAO'] = descricao_cnae.upper()
+    dados.rename(columns={"TELEFONE1": "TELEFONE"}, inplace=True)
+    dados['ENDERECO'] = dados['TIPO_LOGRADOURO'].map(str) + ' ' + dados['LOGRADOURO'].map(str) + ' ' + dados['NUMERO'].map(str) + ' ' + dados['COMPLEMENTO'].map(str)
     dados = dados[[
-        'CNPJ_BASE', 'CNPJ_ORDEM', 'CNPJ_DV', 'NOME_FANTASIA', 'CNAE_PRINCIPAL','CNAE_DESCRICAO',
+        'CNPJ_BASE', 'CNPJ_ORDEM', 'CNPJ_DV', 'NOME_FANTASIA', 'CNAE_PRINCIPAL','CNAE_DESCRICAO','ENDERECO',
         'TIPO_LOGRADOURO', 'LOGRADOURO', 'NUMERO',
-       'COMPLEMENTO', 'BAIRRO', 'CEP', 'UF', 'MUNICIPIO', 'TELEFONE1', 'SITUACAO_CADASTRAL', 'DATA_SITUACAO_CADASTRAL']]
+       'COMPLEMENTO', 'BAIRRO', 'CEP', 'UF', 'MUNICIPIO', 'TELEFONE', 'EMAIL', 'SITUACAO_CADASTRAL', 'DATA_SITUACAO_CADASTRAL']]
     dados.to_csv(f"./base_csv_estabelecimentos/{file}", mode='w',index=False, sep=';')
