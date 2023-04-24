@@ -29,7 +29,7 @@ datazip = agora.strftime("%Y-%m-%d %H_%M_%S")
 merge_base = current_dir + r'/merge_base/'
 all_files_merged = list(filter(lambda x: '.csv' in x, os.listdir(merge_base)))
 if len(all_files_merged) >= 1:
-    backup_limpeza_simples(diretorio_origem=merge_base, nome_zipado=f"backup_base_merge_{datazip}.zip", extensao='.csv', diretorio_destino=f"{merge_base}backup/")
+    backup_limpeza_simples(pasta=merge_base, nome_zipado=f"{merge_base}backup/merge_base_{datazip}.zip", extensao='.csv')
 
 # DataFrame Vazio
 Dados = pd.DataFrame()
@@ -71,11 +71,11 @@ for file_estabelecimento in all_files_estabelecimentos:
         for d_empresa in chunck_d_empresa:
             #print(d_empresa.columns)
             #d_empresa['CNPJ_BASE'] = pd.to_numeric(d_empresa['CNPJ_BASE'], downcast='integer', errors='ignore')
-            merged_data = pd.merge(d_estabelecimento, d_empresa, on='CNPJ_BASE')
+            merged_data = pd.merge(d_estabelecimento, d_empresa, how='inner',on='CNPJ_BASE')
         
 
             # Tratando os dados para disposição
-            merged_data = pd.merge(merged_data, municipios, on='MUNICIPIO')
+            merged_data = pd.merge(merged_data, municipios, how='inner', on='MUNICIPIO')
             merged_data['RUA'] = merged_data['TIPO_LOGRADOURO'] +' '+ merged_data['LOGRADOURO']
             merged_data = merged_data[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA','ENDERECO','RUA', 'NUMERO','COMPLEMENTO', 'BAIRRO',
                 'CIDADE','MUNICIPIO','UF','CEP', 'TELEFONE','EMAIL', 'CNAE_PRINCIPAL','CNAE_DESCRICAO', 'SITUACAO_CADASTRAL', 'DATA_SITUACAO_CADASTRAL']]

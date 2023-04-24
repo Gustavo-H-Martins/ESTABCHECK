@@ -30,7 +30,7 @@ def get_geolocalizacao(idioma:str = 'pt', pais:str = 'br',cod_uf_geonames:str=15
 		'sec-ch-ua-platform': '"Windows"'
 	}
 
-	response = requests.request("GET", url, headers=headers, params=params)
+	response = requests.get(url, headers=headers, params=params)
 	data = response.json()['geonames']
 	base = []
 	for d in data:
