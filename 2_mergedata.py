@@ -78,7 +78,7 @@ for file_estabelecimento in all_files_estabelecimentos:
             merged_data = pd.merge(merged_data, municipios, on='MUNICIPIO')
             merged_data['RUA'] = merged_data['TIPO_LOGRADOURO'] +' '+ merged_data['LOGRADOURO']
             merged_data = merged_data[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA','ENDERECO','RUA', 'NUMERO','COMPLEMENTO', 'BAIRRO',
-                'CIDADE','UF','CEP', 'TELEFONE','EMAIL', 'CNAE_PRINCIPAL','CNAE_DESCRICAO', 'SITUACAO_CADASTRAL', 'DATA_SITUACAO_CADASTRAL']]
+                'CIDADE','MUNICIPIO','UF','CEP', 'TELEFONE','EMAIL', 'CNAE_PRINCIPAL','CNAE_DESCRICAO', 'SITUACAO_CADASTRAL', 'DATA_SITUACAO_CADASTRAL']]
             
             dados = pd.concat([dados, merged_data], ignore_index=True)
             

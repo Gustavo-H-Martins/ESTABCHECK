@@ -24,7 +24,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 base_csv_estabelecimentos = current_dir + r'/base_csv_estabelecimentos/'
 all_files_estabelecimentos = list(filter(lambda x: '.csv' in x, os.listdir(base_csv_estabelecimentos)))
 if len(all_files_estabelecimentos) >= 1:
-    backup_limpeza_simples(pasta=base_csv_estabelecimentos, nome_zipado=f'base_csv_estabelecimentos{datazip}.zip',extensao='.csv')
+    backup_limpeza_simples(pasta=base_csv_estabelecimentos, nome_zipado=f'{base_csv_estabelecimentos}backup/estabelecimentos_{datazip}.zip',extensao='.csv')
 #diretorio = r'Bases\Base_atualizada/'
 diretorio = current_dir.replace("ESTABCHECK", r"ETL_CNPJ/Bases/" )
 
