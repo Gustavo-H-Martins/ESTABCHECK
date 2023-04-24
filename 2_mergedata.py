@@ -39,15 +39,15 @@ diretorio_estabelecimentos = current_dir + r'/base_csv_estabelecimentos/'
 all_files_estabelecimentos = list(filter(lambda x: '.csv' in x, os.listdir(diretorio_estabelecimentos)))
 
 # Parâmetros Estabelecimentos
-dtypes_ESTABELE = {'CNPJ_BASE': 'category',
+"""dtypes_ESTABELE = {'CNPJ_BASE': 'category',
 'CNPJ_ORDEM': 'category',
-'CNPJ_DV': 'category'}
+'CNPJ_DV': 'category'}"""
 # Parâmetros Estabelecimentos
 dtypes_EMPRESA = {'CNPJ_BASE': 'category'}
 
 # Municípios
-base_municipios = current_dir + r'/auxiliares/MUNICIPIOS.csv'
-municipios = pd.read_csv(base_municipios, sep=';', usecols=['MUNICIPIO','CIDADE'])
+base_municipios = current_dir + r'/auxiliares/PADRAO_MUNICIPIO_RFB.csv'
+municipios = pd.read_csv(base_municipios, sep=';', usecols=['MUNICIPIO','CIDADE'], dtype='str')
 
 # Iterando sobre os estabelecimentos
 for file_estabelecimento in all_files_estabelecimentos:
@@ -57,9 +57,9 @@ for file_estabelecimento in all_files_estabelecimentos:
     dados = pd.DataFrame()
 
 
-    d_estabelecimento = pd.read_csv(f'{diretorio_estabelecimentos}{file_estabelecimento}', sep=';', dtype=dtypes_ESTABELE)
+    d_estabelecimento = pd.read_csv(f'{diretorio_estabelecimentos}{file_estabelecimento}', sep=';', dtype='str')
     #print(d_estabelecimento.columns)
-    d_estabelecimento['CNPJ'] = d_estabelecimento[['CNPJ_BASE', 'CNPJ_ORDEM', 'CNPJ_DV']].apply(lambda x: ''.join(x), axis=1)
+    d_estabelecimento['CNPJ'] = d_estabelecimento['CNPJ_BASE'].map(str)+d_estabelecimento['CNPJ_ORDEM'].map(str) + d_estabelecimento['CNPJ_DV'].map(str)
     #d_estabelecimento['CNPJ_BASE'] = pd.to_numeric(d_estabelecimento['CNPJ_BASE'], downcast='integer')
     diretorio_empresa = current_dir.replace("ESTABCHECK", r"ETL_CNPJ/Bases_EMPRESAS/" )
     all_files_empresa =  list(filter(lambda x: '.csv' in x, os.listdir(diretorio_empresa)))
@@ -67,7 +67,7 @@ for file_estabelecimento in all_files_estabelecimentos:
     # Comparando com as empresas
     for file_empresa in all_files_empresa:
 
-        chunck_d_empresa = pd.read_csv(f'{diretorio_empresa}{file_empresa}',dtype=dtypes_EMPRESA,on_bad_lines='warn', sep=';', chunksize=1000000)
+        chunck_d_empresa = pd.read_csv(f'{diretorio_empresa}{file_empresa}',dtype='str',on_bad_lines='warn', sep=';', chunksize=1000000)
         for d_empresa in chunck_d_empresa:
             #print(d_empresa.columns)
             #d_empresa['CNPJ_BASE'] = pd.to_numeric(d_empresa['CNPJ_BASE'], downcast='integer', errors='ignore')
@@ -78,7 +78,7 @@ for file_estabelecimento in all_files_estabelecimentos:
             merged_data = pd.merge(merged_data, municipios, how='inner', on='MUNICIPIO')
             merged_data['RUA'] = merged_data['TIPO_LOGRADOURO'] +' '+ merged_data['LOGRADOURO']
             merged_data = merged_data[['CNPJ', 'RAZAO_SOCIAL', 'NOME_FANTASIA','ENDERECO','RUA', 'NUMERO','COMPLEMENTO', 'BAIRRO',
-                'CIDADE','MUNICIPIO','UF','CEP', 'TELEFONE','EMAIL', 'CNAE_PRINCIPAL','CNAE_DESCRICAO', 'SITUACAO_CADASTRAL', 'DATA_SITUACAO_CADASTRAL']]
+                'CIDADE','UF','CEP', 'TELEFONE','EMAIL', 'CNAE_PRINCIPAL','CNAE_DESCRICAO', 'SITUACAO_CADASTRAL', 'DATA_SITUACAO_CADASTRAL']]
             
             dados = pd.concat([dados, merged_data], ignore_index=True)
             

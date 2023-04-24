@@ -13,4 +13,4 @@
 br_base_cnpj.db
 modelo_dados_en.zip
 database/backup
-merge_base/backup
+/merge_base
