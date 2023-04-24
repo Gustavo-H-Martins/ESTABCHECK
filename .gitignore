@@ -1,7 +1,16 @@
-# ignore todos os csvs e json
+# ignore todos os arquivos abaixo
+/en_amostra_json
+/modelo_dados_en
+/modelo_dados_pt
 /base_csv_estabelecimentos
-*.zip
+/json_base
+/en_base
+/br_base
 *.rar
 *.xlsx
 *.pyc
 *.gzip
+br_base_cnpj.db
+modelo_dados_en.zip
+database/backup
+merge_base/backup
