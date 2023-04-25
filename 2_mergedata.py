@@ -59,7 +59,7 @@ for file_estabelecimento in all_files_estabelecimentos:
 
     d_estabelecimento = pd.read_csv(f'{diretorio_estabelecimentos}{file_estabelecimento}', sep=';', dtype='str')
     #print(d_estabelecimento.columns)
-    d_estabelecimento['CNPJ'] = d_estabelecimento['CNPJ_BASE'].map(str)+d_estabelecimento['CNPJ_ORDEM'].map(str) + d_estabelecimento['CNPJ_DV'].map(str)
+    d_estabelecimento['CNPJ'] = d_estabelecimento['CNPJ_BASE'].astype(str).str.zfill(8) + d_estabelecimento['CNPJ_ORDEM'].astype(str).str.zfill(4) + d_estabelecimento['CNPJ_DV'].astype(str).str.zfill(2)
     #d_estabelecimento['CNPJ_BASE'] = pd.to_numeric(d_estabelecimento['CNPJ_BASE'], downcast='integer')
     diretorio_empresa = current_dir.replace("ESTABCHECK", r"ETL_CNPJ/Bases_EMPRESAS/" )
     all_files_empresa =  list(filter(lambda x: '.csv' in x, os.listdir(diretorio_empresa)))
