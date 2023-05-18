@@ -1,0 +1,28 @@
+UF;adminCode2;adminName1;Tipo
+AC;1;Acre;state
+AL;2;Alagoas;state
+AM;4;Amazonas;state
+AP;3;Amapa;state
+BA;5;Bahia;state
+CE;6;Ceara;state
+DF;7;Distrito Federal;distrito federal (federal district)
+ES;8;Espirito Santo;state
+GO;29;Goias;state
+MA;13;Maranhao;state
+MG;15;Minas Gerais;state
+MS;11;Mato Grosso do Sul;state
+MT;14;Mato Grosso;state
+PA;16;Para;state
+PB;17;Paraiba;state
+PE;30;Pernambuco;state
+PI;20;Piaui;state
+PR;18;Parana;state
+RJ;21;Rio de Janeiro;state
+RN;22;Rio Grande do Norte;state
+RO;24;Rondonia;state
+RR;25;Roraima;state
+RS;23;Rio Grande do Sul;state
+SC;26;Santa Catarina;state
+SE;28;Sergipe;state
+SP;27;Sao Paulo;state
+TO;31;Tocantins;state
