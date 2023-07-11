@@ -11,14 +11,9 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import multiprocessing
 
-merge_dados_dados = pd.read_excel("merge_data_cadastrur-rfb.xlsx", dtype="string")
+merge_dados_dados = pd.read_json("recorte_apple_abrasel.json", dtype="string")
 
-urls = []
-for nome_fantasia, uf, cidade, bairro in merge_dados_dados[["NOME_FANTASIA", "UF", "CIDADE" ,"BAIRRO"]].itertuples(index=False):
-    urls.append(f"https://www.google.com/maps/search/{nome_fantasia}+{uf}+{cidade}+{bairro}".replace(' ', '+'))
-
-merge_dados_dados["URL"] = urls
-
+urls = merge_dados_dados["URL"].to_list()
 def get_horario_servicos(url:str):
     #Omite o Navegador na Execução
     chrome_options = Options()
@@ -35,7 +30,7 @@ def get_horario_servicos(url:str):
     # instanciando o navegador
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     driver.get(url)
-    driver.implicitly_wait(15)
+    driver.implicitly_wait(5)
     driver.maximize_window()
     actions = ActionChains(driver)
     try:
@@ -99,26 +94,23 @@ def get_horario_servicos(url:str):
         print(f"error : {url}")
         pass
     driver.close()
-    return quadro_horario, opcoes_servico, url
+
+    # extrai os valores da lista de resultados
+    complemento = {"HORARIO_FUNCIONAMENTO":[], "OPCOES_DE_SERVICO": [], "URL": []}
+    complemento["HORARIO_FUNCIONAMENTO"].append(quadro_horario)
+    complemento["OPCOES_DE_SERVICO"].append(opcoes_servico)
+    complemento["URL"].append(url)
+    dataframe = pd.DataFrame(complemento)
+    dataframe.to_csv("recorte_apple_abrasel_complemento.csv", sep=';', encoding="utf-8", mode="a", index=False, header=False)
 
 if __name__ == '__main__':
-    # cria um pool com 5 processos
+    # cria um pool com 6 processos
     pool = multiprocessing.Pool(5) 
     
     # aplica a função a cada url da lista
-    resultados = pool.map(get_horario_servicos, urls) 
+    pool.map(get_horario_servicos, urls[4700:]) 
     
     # fecha o pool
     pool.close() 
     # espera os processos terminarem
     pool.join() 
-
-    # extrai os valores da lista de resultados
-    complemento = {"HORARIO_FUNCIONAMENTO":[], "OPCOES_DE_SERVICO": [], "URL": []}
-    for quadro_horario, opcoes_servico, url in resultados: 
-        complemento["HORARIO_FUNCIONAMENTO"].append(quadro_horario)
-        complemento["OPCOES_DE_SERVICO"].append(opcoes_servico)
-        complemento["URL"].append(url)
-    dataframe = pd.DataFrame(complemento)
-    dataframe.to_json("merge_dados_dados_complemento.json", orient="records")
-    merge_dados_dados.to_json("merge_dados_dados.json", orient="records")
